@@ -5,6 +5,7 @@ import com.example.ex03.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,5 +22,18 @@ public class MemberServiceImpl implements MemberService{
     public Optional<Long> findNumber(MemberDto memberDto) {
         Optional<Long> memberNumber = Optional.ofNullable(memberMapper.selectNumber(memberDto));
         return memberNumber;
+    }
+
+    @Override
+    public List<MemberDto> memberList() {
+        return memberMapper.selectAll();
+    }
+
+    @Override
+    public MemberDto findMember(String memberName) throws IllegalArgumentException{
+        return Optional.ofNullable(memberMapper.selectByName(memberName))
+                .orElseThrow(()->{
+                    throw new IllegalArgumentException("존재하지 않는 회원 이름입니다.");
+                });
     }
 }

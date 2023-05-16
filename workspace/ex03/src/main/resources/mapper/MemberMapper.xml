@@ -21,6 +21,18 @@
         values (#{memberNumber}, #{memberId},#{memberPassword},#{memberName})
     </insert>
 
+    <select id="selectAll" resultType="memberDto">
+        SELECT MEMBER_NUMBER, MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME
+        FROM TBL_MEMBER
+    </select>
+
+    <select id="selectByName" resultType="memberDto">
+        SELECT MEMBER_NUMBER, MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME
+        FROM TBL_MEMBER
+        WHERE MEMBER_NAME LIKE '%'|| #{memberName}||'%'
+    </select>
+
+
 
 
 </mapper>

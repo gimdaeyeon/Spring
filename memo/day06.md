@@ -72,14 +72,14 @@ Optional타입은 null 체크를 보다 간결하고 안전하게 코드를 작�
 ```
     비어있는 옵셔널 객체를 생성한다.
     
-1. `of()`
+2. `of()`
     ```java
     Optional<T> opt = Optional.of(값);
     ```
     값을 저장하고 있는 옵셔널 객체를 생성한다. 값이 확실하게 null이 아닌경우에만 사용한다.
     만약 null을 저장하면 NPE가 발생한다.
     
-2. `ofNullable()`
+3. `ofNullable()`
     ```java
     Optional<T> opt = Optional.ofNullable(값);
     ```

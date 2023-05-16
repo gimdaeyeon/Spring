@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Slf4j
@@ -41,5 +43,15 @@ class MemberMapperTest {
         log.info("number : "+ member.getMemberNumber());
     }
 
+    @Test
+    void selectAll(){
+        List<MemberDto> memberList = memberMapper.selectAll();
+        log.info("memberList"+memberList.toString());
+    }
+    @Test
+    void selectMemberByName(){
+        MemberDto member = memberMapper.selectByName("장종필");
+        log.info(member.toString());
+    }
 
 }
