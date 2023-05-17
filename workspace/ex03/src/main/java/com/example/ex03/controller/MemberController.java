@@ -29,7 +29,7 @@ public class MemberController {
 //    }
 @GetMapping("/login")
 public String login(MemberDto memberDto, HttpServletRequest req) {
-    Optional<Long> memberNumber = memberService.findNumber(memberDto);
+    Optional<Long> memberNumber = Optional.ofNullable(memberService.findNumber(memberDto));
    if(memberNumber.isPresent()){
        req.getSession().setAttribute("memberNumber", memberNumber.get());
        return "main";

@@ -38,20 +38,12 @@ class ProductServiceTest {
     @Test
     @DisplayName("상품번호로 상품 조회")
     void find() {
-//        when(productMapper.select(any(Long.class))).thenReturn(productDto);
         doReturn(productDto).when(productMapper).select(any(Long.class));
-
-//        when(productMapper.select(null)).thenReturn(null);
-        doReturn(null).when(productMapper.select(null));
 
         assertThat(productService.find(3L).getProductName())
                 .isEqualTo(productDto.getProductName());
-
-        assertThatThrownBy(()->productService.find(null))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("상품 번호를");
-
     }
+
     @Test
     @DisplayName("상품번호로 상품 조회 : 예외 확인")
     void find2() {

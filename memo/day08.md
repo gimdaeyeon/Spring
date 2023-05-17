@@ -96,8 +96,10 @@ when(userMapper.select()).thenReturn(userDto);
     3. doNothing() : 스텁이 아무런 행위도 안하도록 정의(void메소드도 사용 가능)
 
 ## Verify(검증)
-스텁 메소드를 검증하는 메소드이며 다음과 같이 사용한다.
+스텁 메소드를 검증하는 메소드이며 다음과 같이 사용한다.   
+```java
 verify(T mock객체, VerificationMode mode)   
+``` 
 VerificationMode는 검증할 값을 정의하는 메소드이다.    
 주로 times(n)가 많이 사용된다.   
 

@@ -12,23 +12,31 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
     private final MemberMapper memberMapper;
-
+//회원 추가
     @Override
-    public void addMember(MemberDto memberDto) {
-        memberMapper.insert(memberDto);
+    public void addMember(MemberDto memberDto) throws IllegalArgumentException{
+        memberMapper.insert(Optional.ofNullable(memberDto)
+                .orElseThrow(()->{
+                throw new IllegalArgumentException("회원정보를 올바르게 입력해주세요");
+                })
+        );
     }
 
+//    회원정보로 회원번호 가져오기(로그인?)
     @Override
-    public Optional<Long> findNumber(MemberDto memberDto) {
-        Optional<Long> memberNumber = Optional.ofNullable(memberMapper.selectNumber(memberDto));
-        return memberNumber;
+    public Long findNumber(MemberDto memberDto) throws IllegalArgumentException{
+        return Optional.ofNullable(memberMapper.selectNumber(memberDto))
+                .orElseThrow(()->{
+                    throw new IllegalArgumentException("회원정보가 존재하지 않습니다.");
+                });
     }
-
+// 전체 회원정보 가져오기
     @Override
     public List<MemberDto> memberList() {
         return memberMapper.selectAll();
     }
 
+//   이름으로 회원정보 가져오기
     @Override
     public MemberDto findMember(String memberName) throws IllegalArgumentException{
         return Optional.ofNullable(memberMapper.selectByName(memberName))
