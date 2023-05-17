@@ -2,7 +2,7 @@
 
 - 컨트롤러 클래스에서 @RestController어노테이션 붙여주면 Rest를 사용하는 컨트롤러가 생성된다.
 - 기존의 컨트롤러와 사용방법은 똑같다.
-- url주소는 보통 예를들어 기존 유저를 다루던 컨트롤러에서 "/user/~"를 -> "/users/v1(버전)/~"이런식으로 사용한다 (꼭 지킬필요는 없음) 
+- url주소는 보통 예를들어 기존 유저를 다루던 컨트롤러에서 "/user/\*"를 -> "/users/v1(버전)/\*"이런식으로 사용한다 (꼭 지킬필요는 없음) 
 - return을 하면 그 내용이 화면으로 전달된다.
 
 ---
@@ -13,12 +13,9 @@
 매개변수에서 받을 값에 @PathVariable("boardNumber") 이런식으로 어떤값을 받아올지 지정한다.
  ```java
  @GetMapping("/{boardNumber}")
-    public BoardDto boardDetail(@PathVariable("boardNumber") Long boardNumber){
-        BoardDto boardDto = new BoardDto();
-        boardDto.setBoardNumber(1L);
-        boardDto.setBoardTitle("title");
-        boardDto.setBoardContent("content");
-        boardDto.setMemberId("aaaa");
+public BoardDto boardDetail(@PathVariable("boardNumber") Long boardNumber){
+      
+     BoardDto boardDto = boardService.getBoardInfo(boardNumber);
 
         return boardDto;
     }
@@ -39,7 +36,7 @@ Assertion라이브러리의 불편한 점을 보완해서 업그레이드한 라
 
 ### 사용하는 메소드들
 
-- `assertThat(param)` : 검증하고자하는 값을 매개변수에 넣는다.
+- `assertThat(param)` : 검증하고자하는 값을 매개변수에 넣는다.7
 - `isEqualTo(param)` : 선언한 값과 매개변수의 갑이 일치하는지 비교한다.
 - `isNotEmpty()` : 비어있는지 확인
 - `contains("반갑")` : 포함되어있는지 확인
