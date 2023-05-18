@@ -14,17 +14,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class ProductService {
-
     public final ProductMapper productMapper;
 
     //    상품번호로 상품조회
     @Transactional(readOnly = true)
-                // @NonNull 매개변수에 들어오는 값이 null이면
-                // 자동으로 오류를 발생시켜주는 어노테이션
-                // 라입브러리의존성이 강하기 때문에 현재 과정에서는 지양한다.
+                // @NonNull 매개변수에 들어오는 값이 null이면 자동으로 오류를 발생시켜주는 어노테이션
+                // 라이브러리 의존성이 강하기 때문에 현재 국비 과정에서는 지양(if문으로 대체)
     public ProductDto find(Long productNumber){
-//        Long number = Optional.ofNullable(productNumber).orElseThrow(() -> {
-//            throw new IllegalArgumentException("상품번호를 입력하세요");});
         if(productNumber==null){
             throw new IllegalArgumentException("상품번호를 입력하세요");
         }
@@ -49,24 +45,18 @@ public class ProductService {
         productMapper.insert(productDto);
     }
 
-
-
     //    상품 삭제
     public void remove(Long productNumber)  {
         if(productNumber==null){
             throw new IllegalArgumentException("상품 번호 입력해라");
         }
-
         productMapper.delete(productNumber);
     }
-
-    ;
 
     //    상품 정보 변경
     public void modify(ProductDto productDto) {
         if(productDto==null){
             throw new IllegalArgumentException("상품 정보를 입력해라!");
-
         }
         productMapper.update(productDto);
     }

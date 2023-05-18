@@ -54,7 +54,7 @@ Mock객체를 만드는 것을 Mocking이라고 한다.
 Mock객체의 메소드를 실행했을 때 행위를 미리 정의하는 것
 
 ### 스텁(stub)이란?
-스터빙으로 새롭게 정의된 베소드
+스터빙으로 새롭게 정의된 메소드
 
 ```java
 when(userMapper.select()).thenReturn(userDto);
@@ -91,7 +91,7 @@ when(userMapper.select()).thenReturn(userDto);
     특이사항 : 반환타입이 void인 메소드를 스터빙하려면 doNothing()을 사용한다.
 
     stubber메소드 종류   
-    1. doReturn() : 스텁이 반환할 객체를 정으
+    1. doReturn() : 스텁이 반환할 객체를 정의
     2. doThrow() : 스텁이 throw할 예외를 정의
     3. doNothing() : 스텁이 아무런 행위도 안하도록 정의(void메소드도 사용 가능)
 

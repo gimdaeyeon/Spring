@@ -39,8 +39,6 @@ class UserMapperTest {
 
         log.info(foundUser.toString());
         assertThat(userDto.getUserName()).isEqualTo(foundUser.getUserName());
-//        assertThat(userDto.getUserName()).isEqualTo("홍길동");
-//        assertThat("안녕하세요! 반갑습니다.").isNotEmpty().contains("반갑").startsWith("안").isNotNull();
     }
 
     @Test

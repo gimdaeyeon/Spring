@@ -45,25 +45,34 @@ class MemberServiceImplTest {
     @DisplayName("이름으로 회원정보 찾기")
     void findMember() {
         doReturn(memberDto).when(memberMapper).selectByName(any(String.class));
-        doReturn(null).when(memberMapper).selectByName(null);
 
         MemberDto foundMember = memberService.findMember("fsdf");
 
         assertThat(foundMember.getMemberNumber()).isEqualTo(memberDto.getMemberNumber());
-        assertThatThrownBy(()->{
-            memberService.findMember(null);
-        }).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("존재하지");
+        assertThatThrownBy(()->memberService.findMember(null))
+                .isInstanceOf(IllegalArgumentException.class).hasMessageContaining("누락");
     }
+
+    @Test
+    @DisplayName("이름으로 회원정보 찾기 : 해당회원이름이 존재하지 않을때 예외")
+    void findMember2() {
+        doReturn(null).when(memberMapper).selectByName(any(String.class));
+
+        assertThatThrownBy(()-> memberService.findMember("김아무개"))
+            .isInstanceOf(IllegalArgumentException.class).hasMessageContaining("존재하지");
+
+    }
+
 
     //    회원추가
     @Test
     @DisplayName("회원가입 테스트")
     void addMember() {
-        doNothing().when(memberMapper).insert(any(MemberDto.class));
+        doNothing().when(memberMapper).insert2(any(MemberDto.class));
 
         memberService.addMember(memberDto);
 
-        verify(memberMapper, times(1)).insert(any(MemberDto.class));
+        verify(memberMapper, times(1)).insert2(any(MemberDto.class));
     }
 
     //    아이디, 비밀번호로 회원번호 조회

@@ -15,13 +15,17 @@ import java.util.Optional;
 public class UserService {
     private final UserMapper userMapper;
 
-    @Transactional(readOnly = true) // read만 하는 메소드(select)에다가 붙여주면
-                                    // 성능이 향상된다.
+
 //    이름으로 회원조회
-    public UserDto findUser(String userName) throws IllegalArgumentException{
+    @Transactional(readOnly = true) // read만 하는 메소드(select)에다가 붙여주면 성능이 향상된다.
+    public UserDto findUser(String userName){
+        if(userName==null){
+            throw new IllegalArgumentException("유저 이름 누락");
+        }
+
         return Optional.ofNullable(userMapper.select(userName))
                 .orElseThrow(()->{
-                    throw new IllegalArgumentException("존재하지 않는 회원입니다.");
+                    throw new IllegalArgumentException("존재하지 않는 회원의 이름입니다.");
                 });
     }
 //    회원 전체 조회
@@ -30,21 +34,20 @@ public class UserService {
     }
 
 //    회원가입
-    public void register(UserDto userDto) throws IllegalArgumentException{
-       UserDto user = Optional.ofNullable(userDto)
-                .orElseThrow(()->
-                {throw new IllegalArgumentException("회원정보가 없습니다.");
-                });
-        userMapper.insert(user);
+    public void register(UserDto userDto){
+        if(userDto==null){
+            throw new IllegalArgumentException("회원정보 누락");
+        }
+        userMapper.insert(userDto);
     }
 
 //    회원삭제
-    public void remove(Long userNumber) throws IllegalArgumentException{
-        Long number = Optional.ofNullable(userNumber)
-                .orElseThrow(()->{
-                    throw new IllegalArgumentException("존재하지 않는 회원 번호입니다.");
-                });
-        userMapper.delete(number);
+    public void remove(Long userNumber){
+        if(userNumber==null){
+            throw new IllegalArgumentException("회원 번호 누락");
+        }
+
+        userMapper.delete(userNumber);
     }
 
 
