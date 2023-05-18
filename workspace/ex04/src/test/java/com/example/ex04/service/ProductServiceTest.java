@@ -80,18 +80,16 @@ class ProductServiceTest {
 
         productService.remove(54L);
 
-        verify(productMapper, times(1)).delete(any(Long.class));
+        verify(productMapper, times(1)).delete(54L);
     }
 
     @Test
     @DisplayName("상품정보 변경 테스트")
     void modify() {
-        productDto.setProductName("불타는 방망이");
-        productDto.setProductPrice(12341234);
         doNothing().when(productMapper).update(any(ProductDto.class));
 
         productService.modify(productDto);
 
-        verify(productMapper, times(1)).update(any(ProductDto.class));
+        verify(productMapper, times(1)).update(productDto);
     }
 }
