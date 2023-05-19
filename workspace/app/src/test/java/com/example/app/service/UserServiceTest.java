@@ -55,14 +55,11 @@ class UserServiceTest {
     }
     @Test
     @DisplayName("id,pw로 회원번호 조회 : 예외검사")
-    void findUserNumber2() {
+    void findUserNumberException() {
         doReturn(null).when(userMapper).selectUserNumber(any(String.class),any(String.class));
 
         assertThatThrownBy(()->userService.findUserNumber("dfkls","321"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("존재하지");
-
-
-
     }
 }
