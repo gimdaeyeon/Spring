@@ -65,7 +65,12 @@ class UserControllerTest {
     }
 
     @Test
-    void login() {
+    @DisplayName("login페이지 이동")
+    void login() throws Exception{
+        log.info(mockMvc.perform(MockMvcRequestBuilders.get("/user/login"))
+                .andReturn()
+                .getModelAndView()
+                .getViewName());
     }
 
     @Test
