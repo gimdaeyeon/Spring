@@ -13,5 +13,4 @@
         SELECT USER_NUMBER FROM TBL_USER
         WHERE USER_ID =#{userId} AND USER_PASSWORD = #{userPassword}
     </select>
-
 </mapper>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>게시판</title>
+  <link rel="stylesheet" th:href="@{/css/board/board.css}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
+</head>
+<body>
+<!--replayce를 활용하여 fragment를 가져와 넣어준다
+replace를 사용한 태그는 해당 fragment로 교체된다.-->
+<!--th:replace"html파일의 경로 :: fragment이름"-->
+<header class="header" th:replace="fragment/header :: header"></header>
+<div class="container">
+  <h1 class="title">커뮤니티 게시판</h1>
+  <div class="btn-wrap">
+    <button class="add-post-btn" type="button">새 게시글 작성</button>
+  </div>
+  <div class="board">
+    <!-- 게시물 샘플 -->
+    <div class="board-item">
+      <div class="board-img-box">
+        <div class="board-item-image" style="background-image: url(https://via.placeholder.com/300x200)"></div>
+        <div class="board-item-info">
+              <span class="like">
+                <i class="fas fa-heart"></i>
+                <span class="like-count">12</span>
+              </span>
+          <span class="comment">
+                <i class="fas fa-comment"></i>
+                <span class="comment-count">5</span>
+              </span>
+        </div>
+      </div>
+      <div class="board-item-text">
+<!--        타임리프를 이용하여7 링크를 거는 경우
+            쿼리스트링을 사용하고 싶을때 ()를 사용한다.-->
+        <h3 class="board-item-title" >제목</h3>
+        <span class="board-item-author" >작성자ID</span>
+      </div>
+    </div>
+    <!-- /게시물 샘플 -->
+  </div>
+</div>
+<!-- 페이징 처리 -->
+<div class="page-container">
+  <ul class="page-box">
+    <a href="" class="page-a">
+      <li class="page-num prev">&lt</li>
+    </a>
+    <a href="" class="page-a">
+      <li class="page-num active">1</li>
+    </a>
+    <a href="" class="page-a">
+      <li class="page-num">2</li>
+    </a>
+    <a href="" class="page-a">
+      <li class="page-num">3</li>
+    </a>
+    <a href="" class="page-a">
+      <li class="page-num">4</li>
+    </a>
+    <a href="" class="page-a">
+      <li class="page-num">5</li>
+    </a>
+    <a href="" class="page-a">
+      <li class="page-num next">&gt</li>
+    </a>
+  </ul>
+</div>
+<!-- /페이징 처리 -->
+<!--플레쉬 영역의 데이터는 그냥key로 가져오면 되고
+    쿼리스트링의 저장한 데이터는 param.boardNumber를 사용하여 가져온다.-->
+<!--<input type="hidden" class="board-num" th:value="${boardNumber}">-->
+<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+  <script th:src="@{/js/board/board.js}"></script>
+<!--  <script>-->
+<!--    let boardNum = $('.board-num').val();-->
+<!--    if(boardNum){-->
+<!--      alert(boardNum+'번 게시물이 등록되었습니다.')-->
+<!--    }-->
+
+<!--  </script>-->
+
+</body>
+</html>

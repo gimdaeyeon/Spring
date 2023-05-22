@@ -3,7 +3,8 @@
 
 <configuration>
     <typeAliases>
-<!--        <typeAlias type="com.example.app.dto.UserDto" alias="userDto"/>-->
+        <typeAlias type="com.example.app.dto.UserDto" alias="userDto"/>
+        <typeAlias type="com.example.app.dto.BoardDto" alias="boardDto"/>
     </typeAliases>
 
 </configuration>
