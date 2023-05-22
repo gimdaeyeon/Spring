@@ -8,28 +8,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
 </head>
 <body>
-<header class="header">
-  <div class="header-container">
-    <a href="#" class="logo">LOGO</a>
-
-    <nav class="nav" th:if="${session.userNumber ==null}"> <!--if문-->
-      <a th:href="@{/user/login}" class="nav-item login">로그인</a>
-      <a th:href="@{/user/join}" class="nav-item signup">회원가입</a>
-    </nav>
-    <nav class="nav" th:unless="${session.userNumber ==null}"> <!--else문-->
-      <a th:href="@{/user/logout}" class="nav-item login">로그아웃</a>
-    </nav>
-
-  </div>
-</header>
+<!--replayce를 활용하여 fragment를 가져와 넣어준다
+replace를 사용한 태그는 해당 fragment로 교체된다.-->
+<!--th:replace"html파일의 경로 :: fragment이름"-->
+<header class="header" th:replace="fragment/header :: header"></header>
 <div class="container">
   <h1 class="title">커뮤니티 게시판</h1>
   <div class="btn-wrap">
-    <button class="add-post-btn">새 게시글 작성</button>
+    <button class="add-post-btn" type="button">새 게시글 작성</button>
   </div>
   <div class="board">
     <!-- 게시물 샘플 -->
-    <div class="board-item">
+    <div class="board-item" th:each="board : ${boardList}">
       <div class="board-img-box">
         <div class="board-item-image" style="background-image: url(https://via.placeholder.com/300x200)"></div>
         <div class="board-item-info">
@@ -44,8 +34,12 @@
         </div>
       </div>
       <div class="board-item-text">
-        <h3 class="board-item-title">게시글 제목</h3>
-        <span class="board-item-author">작성자</span>
+<!--        타임리프를 이용하여7 링크를 거는 경우
+            쿼리스트링을 사용하고 싶을때 ()를 사용한다.-->
+        <a th:href="@{/board/view(boardNumber=${board.boardNumber})}">
+        <h3 class="board-item-title" th:text="${board.boardTitle}"></h3>
+        </a>
+        <span class="board-item-author" th:text="${board.userId}"></span>
       </div>
     </div>
     <!-- /게시물 샘플 -->
@@ -78,5 +72,18 @@
   </ul>
 </div>
 <!-- /페이징 처리 -->
+<!--플레쉬 영역의 데이터는 그냥key로 가져오면 되고
+    쿼리스트링의 저장한 데이터는 param.boardNumber를 사용하여 가져온다.-->
+<input type="hidden" class="board-num" th:value="${boardNumber}">
+<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+  <script th:src="@{/js/board/board.js}"></script>
+  <script>
+    let boardNum = $('.board-num').val();
+    if(boardNum){
+      alert(boardNum+'번 게시물이 등록되었습니다.')
+    }
+
+  </script>
+
 </body>
 </html>

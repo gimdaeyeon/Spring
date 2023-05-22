@@ -1,26 +1,18 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>게시물 작성</title>
-  <link rel="stylesheet" href="/css/board/board.css" />
-  <link rel="stylesheet" href="/css/board/boardWrite.css" />
+  <link rel="stylesheet" th:href="@{/css/board/board.css}" />
+  <link rel="stylesheet" th:href="@{/css/board/boardWrite.css}" />
 </head>
 <body>
-<header class="header">
-  <div class="header-container">
-    <a href="board.html" class="logo">LOGO</a>
-    <nav class="nav">
-      <a href="login.html" class="nav-item login">로그인</a>
-      <a href="join.html" class="nav-item signup">회원가입</a>
-    </nav>
-  </div>
-</header>
+<header class="header" th:replace="fragment/header :: header"></header>
 <div class="container">
   <h1 class="title">게시물 작성</h1>
   <div class="form-wrap">
-    <form class="new-post-form" action="" method="post" enctype="multipart/form-data">
+    <form class="new-post-form" th:action="@{/board/write}" method="post" enctype="multipart/form-data">
       <div class="form-group">
         <label for="post-title">제목</label>
         <input type="text" id="post-title" name="boardTitle" required />
@@ -45,6 +37,6 @@
   </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
-<script src="/js/board/boardWrite.js"></script>
+<script th:src="@{/js/board/boardWrite.js}"></script>
 </body>
 </html>

@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+
 @SpringBootTest
 @Slf4j
 @Transactional
@@ -57,7 +59,7 @@ class UserControllerTest {
                 .getModelAndView()
                 .getViewName();
 
-        log.info("viewName : " +viewName);
+        log.info("viewName : " + viewName);
     }
 
     @Test

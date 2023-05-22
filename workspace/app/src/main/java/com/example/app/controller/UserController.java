@@ -39,7 +39,7 @@ public class UserController {
             e.printStackTrace();
         return new RedirectView("/user/login");
         }
-        return new RedirectView("/board/board");
+        return new RedirectView("/board/list");
     }
 
     @GetMapping("/logout")
