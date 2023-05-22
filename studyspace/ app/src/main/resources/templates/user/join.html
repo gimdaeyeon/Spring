@@ -8,15 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/user/join.css}" />
 </head>
 <body>
-<header class="header">
-    <div class="header-container">
-        <a href="board.html" class="logo">LOGO</a>
-        <nav class="nav">
-            <a href="login.html" class="nav-item login">로그인</a>
-            <a href="join.html" class="nav-item signup">회원가입</a>
-        </nav>
-    </div>
-</header>
+<header class="header" th:replace="fragment/header :: header"></header>
 <div class="container">
     <h1 class="title">회원가입</h1>
     <div class="form-wrap">

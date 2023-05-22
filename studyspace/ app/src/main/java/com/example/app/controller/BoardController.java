@@ -10,19 +10,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class BoardController {
 
-    @GetMapping("/board")
-    public void showBoardList(){
+    @GetMapping("/list")
+    public String showBoardList(){
 
+        return "board/board";
     }
 
-    @GetMapping("/boardWrite")
-    public void boardWrite(){
-
+    @GetMapping("/write")
+    public String boardWrite(){
+        return "board/boardWrite";
     }
 
 
-    @GetMapping("/boardView")
-    public void boardView(){}
+    @GetMapping("view")
+    public String boardView(){
+        return "board/boardView";
+    }
 
 
 

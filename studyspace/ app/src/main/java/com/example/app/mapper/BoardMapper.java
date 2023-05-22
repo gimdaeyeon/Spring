@@ -1,6 +1,7 @@
 package com.example.app.mapper;
 
 import com.example.app.dto.BoardDto;
+import com.example.app.vo.BoardVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,8 +15,8 @@ public interface BoardMapper {
 //    수정
     public void update(BoardDto boardDto);
 //    조회
-//    public BoardVo select(Long boardNumber);
+    public BoardVo select(Long boardNumber);
 //   전체 조회
-//    public List<BoardVo> selectAll();
+    public List<BoardVo> selectAll();
 
 }
