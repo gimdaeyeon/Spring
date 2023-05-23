@@ -13,9 +13,20 @@ $('body').click(function (e) {
         $('.reply-btns__box').addClass('none');
     }
 });
+//게시글 수정
+$('.btn-modify').on('click', function (){
+    let boardNumber = $('.board-num').val();
+    window.location.href = '/board/modify?boardNumber='+boardNumber;
+})
+//게시글 삭제
+$('.btn-remove').on('click', function (){
+    let boardNumber = $('.board-num').val();
+    window.location.href = '/board/remove?boardNumber='+boardNumber;
+})
 
+//뒤로가기 버튼
 $('.btn-back').on('click', function (){
-    window.location.href = '/board/boardList';
+    window.location.href = '/board/list';
 })
 
 // 리플 작성 완료 처리

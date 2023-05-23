@@ -50,6 +50,25 @@ public class BoardController {
         return "board/boardView";
     }
 
+    @GetMapping("/modify")
+    public String boardModify(Long boardNumber, Model model){
+        model.addAttribute("board", boardService.findBoard(boardNumber));
+        return "board/boardModify";
+    }
+    @PostMapping("/modify")
+    public RedirectView boardModify(BoardDto boardDto,RedirectAttributes redirectAttributes){
+        boardService.modify(boardDto);
+        redirectAttributes.addAttribute("boardNumber",boardDto.getBoardNumber());
+        return new RedirectView("/board/view");
+    }
+
+    @GetMapping("/remove")
+    public RedirectView boardRemove(Long boardNumber){
+        boardService.remove(boardNumber);
+        return new RedirectView("/board/list");
+    }
+
+
 
 
 }
