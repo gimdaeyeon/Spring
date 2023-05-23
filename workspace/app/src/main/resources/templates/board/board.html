@@ -48,26 +48,26 @@ replace를 사용한 태그는 해당 fragment로 교체된다.-->
 <!-- 페이징 처리 -->
 <div class="page-container">
   <ul class="page-box">
-    <a href="" class="page-a">
+    <a th:href="@{/board/list(page=${pageInfo.startPage-1})}" class="page-a" th:if="${pageInfo.prev}">
       <li class="page-num prev">&lt</li>
     </a>
-    <a href="" class="page-a">
-      <li class="page-num active">1</li>
+
+<!--
+        페이징 처리는 시작번호 ~끝번호 까지 반복을 돌려야 하므로 빠른 for문으로는 처리가 불가능하다.(시작과 끝이 정해져있는 경우)
+        그렇기 때문에 타임리프에서 제공해주는 객체를 사용하여 처리해준다. #을 붙이면 타임리프에서 제공하는 객체를 사용한다는 의미이다.
+        numbers객체의 sequence(시작 값, 끝 값)라는 메소드를 사용할 것이다.1,5-> 1, 2, 3, 4, 5
+
+-->
+    <th:block th:each="i : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+    <a th:href="@{/board/list(page=${i})}" class="page-a">
+      <li class="page-num active" th:text="${i}" th:if="${i == pageInfo.criteria.page}"></li>
+      <li class="page-num" th:text="${i}" th:unless="${i == pageInfo.criteria.page}"></li>
     </a>
-    <a href="" class="page-a">
-      <li class="page-num">2</li>
-    </a>
-    <a href="" class="page-a">
-      <li class="page-num">3</li>
-    </a>
-    <a href="" class="page-a">
-      <li class="page-num">4</li>
-    </a>
-    <a href="" class="page-a">
-      <li class="page-num">5</li>
-    </a>
-    <a href="" class="page-a">
-      <li class="page-num next">&gt</li>
+    </th:block>
+
+
+    <a th:href="@{/board/list(page=${pageInfo.endPage+1})}" class="page-a" th:if="${pageInfo.next}">
+      <li class="page-num next" >&gt</li>
     </a>
   </ul>
 </div>

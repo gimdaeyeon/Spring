@@ -10,30 +10,47 @@
     </insert>
 
     <delete id="delete">
-        DELETE FROM TBL_BOARD
+        DELETE
+        FROM TBL_BOARD
         WHERE BOARD_NUMBER = #{boardNumber}
     </delete>
 
     <update id="update">
         UPDATE TBL_BOARD
-        SET BOARD_TITLE = #{boardTitle}, BOARD_CONTENT = #{boardContent}, BOARD_UPDATE_DATE = SYSDATE
+        SET BOARD_TITLE       = #{boardTitle},
+            BOARD_CONTENT     = #{boardContent},
+            BOARD_UPDATE_DATE = SYSDATE
         WHERE BOARD_NUMBER = #{boardNumber}
     </update>
 
     <select id="select" resultType="boardVo">
-        SELECT BOARD_NUMBER, BOARD_TITLE, BOARD_CONTENT, BOARD_REGISTER_DATE, BOARD_UPDATE_DATE,
-               B.USER_NUMBER, U.USER_ID
-        FROM TBL_BOARD B JOIN TBL_USER U
-                              ON B.BOARD_NUMBER = #{boardNumber} AND B.USER_NUMBER = U.USER_NUMBER
+        SELECT BOARD_NUMBER,BOARD_TITLE,BOARD_CONTENT,BOARD_REGISTER_DATE,BOARD_UPDATE_DATE,B.USER_NUMBER,U.USER_ID
+        FROM TBL_BOARD B
+                 JOIN TBL_USER U
+                      ON B.BOARD_NUMBER = #{boardNumber} AND B.USER_NUMBER = U.USER_NUMBER
     </select>
 
     <select id="selectAll" resultType="boardVo">
-        SELECT BOARD_NUMBER, BOARD_TITLE, BOARD_CONTENT, BOARD_REGISTER_DATE, BOARD_UPDATE_DATE,
-               B.USER_NUMBER, U.USER_ID
-        FROM TBL_BOARD B JOIN TBL_USER U
-                              ON B.USER_NUMBER = U.USER_NUMBER
+        SELECT BOARD_NUMBER,BOARD_TITLE,BOARD_CONTENT,BOARD_REGISTER_DATE,BOARD_UPDATE_DATE,USER_NUMBER,
+        USER_ID FROM
+        (SELECT ROWNUM AS RNUM,BOARD_NUMBER,BOARD_TITLE,BOARD_CONTENT,BOARD_REGISTER_DATE,BOARD_UPDATE_DATE,USER_NUMBER,USER_ID
+        FROM (SELECT BOARD_NUMBER,BOARD_TITLE,BOARD_CONTENT,BOARD_REGISTER_DATE,BOARD_UPDATE_DATE,B.USER_NUMBER,U.USER_ID
+        FROM TBL_BOARD B
+        JOIN TBL_USER U
+        ON B.USER_NUMBER = U.USER_NUMBER
         ORDER BY BOARD_NUMBER DESC
+        ) S1
+        <![CDATA[
+        WHERE ROWNUM <= #{page}* #{amount}
+            ]]>
+        )S2
+        WHERE RNUM >(#{page}-1)* #{amount}
     </select>
+
+    <select id="selectTotal" resultType="_int">
+        SELECT COUNT(BOARD_NUMBER) FROM TBL_BOARD
+    </select>
+
 </mapper>
 
 

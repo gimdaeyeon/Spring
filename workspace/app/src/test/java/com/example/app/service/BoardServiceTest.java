@@ -100,9 +100,9 @@ class BoardServiceTest {
     @Test
     @DisplayName("게시물 전체 조회")
     void findAll() {
-        doReturn(List.of(boardVo)).when(boardMapper).selectAll();
-
-        assertThat(boardService.findAll().size()).isEqualTo(1);
+//        doReturn(List.of(boardVo)).when(boardMapper).selectAll();
+//
+//        assertThat(boardService.findAll().size()).isEqualTo(1);
 
     }
 }

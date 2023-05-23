@@ -14,8 +14,34 @@ $('body').click(function (e) {
     }
 });
 
+//삭제 버튼
+$('.btn-remove').on('click', function (){
+    let boardNumber = $('.board-num').val();
+    window.location.href = '/board/remove?boardNumber='+boardNumber;
+
+//    참고 : JS에서 폼태그 만들어서 post방식으로 데이터 보내기
+//     let obj = document.createElement('input');
+//     obj.setAttribute('type','hidden');
+//     obj.setAttribute('name','boardNumber');
+//     obj.setAttribute('value',boardNumber);
+//     let f =document.createElement('form');
+//     f.appendChild(obj);
+//     f.setAttribute('method','post');
+//     f.setAttribute('action','/board/remove');
+//     document.body.appendChild(f);
+//     f.submit();
+});
+
+//수정 버튼
+$('.btn-modify').on('click', function (){
+    let boardNumber = $('.board-num').val();
+    window.location.href = '/board/modify?boardNumber='+boardNumber;
+});
+
+
+//뒤로가기 버튼
 $('.btn-back').on('click', function (){
-    window.location.href = '/board/boardList';
+    window.location.href = '/board/list';
 })
 
 // 리플 작성 완료 처리
@@ -44,3 +70,6 @@ $('.reply-list-wrap').on('click', '.reply-modify-btn', function () {
 $('.reply-list-wrap').on('click', '.modify-content-btn', function () {
     console.log('modify!!!');
 });
+
+
+
