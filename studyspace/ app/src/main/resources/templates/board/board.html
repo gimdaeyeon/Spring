@@ -19,7 +19,7 @@ replace를 사용한 태그는 해당 fragment로 교체된다.-->
   </div>
   <div class="board">
     <!-- 게시물 샘플 -->
-    <div class="board-item">
+    <div class="board-item" th:each="board : ${boardList}">
       <div class="board-img-box">
         <div class="board-item-image" style="background-image: url(https://via.placeholder.com/300x200)"></div>
         <div class="board-item-info">
@@ -34,10 +34,12 @@ replace를 사용한 태그는 해당 fragment로 교체된다.-->
         </div>
       </div>
       <div class="board-item-text">
-<!--        타임리프를 이용하여7 링크를 거는 경우
+<!--        타임리프를 이용하여 링크를 거는 경우
             쿼리스트링을 사용하고 싶을때 ()를 사용한다.-->
-        <h3 class="board-item-title" >제목</h3>
-        <span class="board-item-author" >작성자ID</span>
+        <a th:href="@{/board/view(boardNumber=${board.boardNumber})}">
+        <h3 class="board-item-title" th:text="${board.boardTitle}"></h3>
+        </a>
+        <span class="board-item-author" th:text="${board.userId}"></span>
       </div>
     </div>
     <!-- /게시물 샘플 -->
@@ -72,16 +74,16 @@ replace를 사용한 태그는 해당 fragment로 교체된다.-->
 <!-- /페이징 처리 -->
 <!--플레쉬 영역의 데이터는 그냥key로 가져오면 되고
     쿼리스트링의 저장한 데이터는 param.boardNumber를 사용하여 가져온다.-->
-<!--<input type="hidden" class="board-num" th:value="${boardNumber}">-->
+<input type="hidden" class="board-num" th:value="${boardNumber}">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
   <script th:src="@{/js/board/board.js}"></script>
-<!--  <script>-->
-<!--    let boardNum = $('.board-num').val();-->
-<!--    if(boardNum){-->
-<!--      alert(boardNum+'번 게시물이 등록되었습니다.')-->
-<!--    }-->
+  <script>
+    let boardNum = $('.board-num').val();
+    if(boardNum){
+      alert(boardNum+'번 게시물이 등록되었습니다.')
+    }
 
-<!--  </script>-->
+  </script>
 
 </body>
 </html>

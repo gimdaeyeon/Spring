@@ -1,18 +1,31 @@
 package com.example.app.controller;
 
+import com.example.app.dto.BoardDto;
+import com.example.app.service.BoardService;
+import com.example.app.vo.BoardVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("/board/*")
 @RequiredArgsConstructor
 public class BoardController {
+    private final BoardService boardService;
 
     @GetMapping("/list")
-    public String showBoardList(){
-
+    public String showBoardList(Model model){
+        List<BoardVo> boardList=boardService.findAll();
+        model.addAttribute("boardList", boardList);
         return "board/board";
     }
 
@@ -21,9 +34,19 @@ public class BoardController {
         return "board/boardWrite";
     }
 
+    @PostMapping("/write")
+    public RedirectView boardWrite(BoardDto boardDto, HttpServletRequest req, RedirectAttributes redirectAttributes){
+        Long userNumber = (Long)req.getSession().getAttribute("userNumber");
+        boardDto.setUserNumber(userNumber);
+        boardService.register(boardDto);
 
-    @GetMapping("view")
-    public String boardView(){
+        redirectAttributes.addFlashAttribute("boardNumber",boardDto.getBoardNumber());
+        return new RedirectView("/board/list");
+    }
+
+    @GetMapping("/view")
+    public String boardView(Long boardNumber, Model model){
+        model.addAttribute("board", boardService.findBoard(boardNumber));
         return "board/boardView";
     }
 
