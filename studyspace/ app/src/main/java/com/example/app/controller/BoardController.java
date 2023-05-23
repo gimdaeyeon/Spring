@@ -3,6 +3,8 @@ package com.example.app.controller;
 import com.example.app.dto.BoardDto;
 import com.example.app.service.BoardService;
 import com.example.app.vo.BoardVo;
+import com.example.app.vo.Criteria;
+import com.example.app.vo.PageVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,9 +25,10 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/list")
-    public String showBoardList(Model model){
-        List<BoardVo> boardList=boardService.findAll();
+    public String showBoardList(Model model,Criteria criteria){
+        List<BoardVo> boardList=boardService.findAll(criteria);
         model.addAttribute("boardList", boardList);
+        model.addAttribute("pageInfo",new PageVo(criteria,boardService.getTotal()));
         return "board/board";
     }
 
