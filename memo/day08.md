@@ -57,7 +57,7 @@ Mock객체의 메소드를 실행했을 때 행위를 미리 정의하는 것
 스터빙으로 새롭게 정의된 메소드
 
 ```java
-when(userMapper.select()).thenReturn(userDto);
+ doReturn(boardVo).when(boardMapper).select(any(Long.class));
 // 위의 코드는 stubbing을 하는것
 // userMapper.select()
 ```
@@ -86,7 +86,7 @@ when(userMapper.select()).thenReturn(userDto);
   stubber메소드로 시작해서 중간에 when()이 들어간다.   
   when()이후에 스터빙할 메소드를 체이닝한다.   
 
-      `stubber().when(mock객체).스터빙할 메소드()`
+      `doReturn(반환값).when(mock객체).스터빙할 메소드();`
 
     특이사항 : 반환타입이 void인 메소드를 스터빙하려면 doNothing()을 사용한다.
 

@@ -17,13 +17,13 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import static com.example.app.vo.Url.*;
 
 @Controller
-@RequestMapping("/board/*")
+@RequestMapping(BOARD_URL)
 @RequiredArgsConstructor
 public class BoardController {
     private final BoardService boardService;
-
     @GetMapping("/list")
     public String showBoardList(Model model,Criteria criteria){
         List<BoardVo> boardList=boardService.findAll(criteria);
@@ -70,8 +70,4 @@ public class BoardController {
         boardService.remove(boardNumber);
         return new RedirectView("/board/list");
     }
-
-
-
-
 }
