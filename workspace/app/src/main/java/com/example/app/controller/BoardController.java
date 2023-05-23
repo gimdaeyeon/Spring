@@ -2,6 +2,7 @@ package com.example.app.controller;
 
 import com.example.app.dto.BoardDto;
 import com.example.app.service.BoardService;
+import com.example.app.service.FileService;
 import com.example.app.vo.BoardVo;
 import com.example.app.vo.Criteria;
 import com.example.app.vo.PageVo;
@@ -11,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -22,6 +25,8 @@ import java.util.List;
 @RequestMapping("/board/*")
 public class BoardController {
     private final BoardService boardService;
+    private final FileService fileService;
+
 
     @GetMapping("/list")
     public String showBoardList(Criteria criteria, Model model){
@@ -39,7 +44,8 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public RedirectView boardWrite(BoardDto boardDto, HttpServletRequest req, RedirectAttributes redirectAttributes){
+    public RedirectView boardWrite(BoardDto boardDto, HttpServletRequest req, RedirectAttributes redirectAttributes
+        ,@RequestParam("boardFile") List<MultipartFile> files){
 //        RedirectAttributes 는 리다이렉트 전용 Model객체라고 생각하면 된다.
         Long userNumber = (Long)req.getSession().getAttribute("userNumber");
         boardDto.setUserNumber(userNumber);
@@ -54,6 +60,11 @@ public class BoardController {
 //        플래쉬를 사용하여 데이터를 전송한다.
 //        권장하는 사용 방법 : 화면에서 데이터를 사용하는 경우
         redirectAttributes.addFlashAttribute("boardNumber", boardDto.getBoardNumber());
+
+        if(files !=null){
+
+        }
+
         return new RedirectView("/board/list");
     }
 
