@@ -21,7 +21,10 @@ replace를 사용한 태그는 해당 fragment로 교체된다.-->
     <!-- 게시물 샘플 -->
     <div class="board-item" th:each="board : ${boardList}">
       <div class="board-img-box">
-        <div class="board-item-image" style="background-image: url(https://via.placeholder.com/300x200)"></div>
+
+        <div th:if="${board.fileName==null}" class="board-item-image" style="background-image: url(https://via.placeholder.com/300x200)"></div>
+        <div th:unless="${board.fileName==null}" class="board-item-image" th:style="${'background-image: url(/upload/'+board.fileUploadPath+'/th_'+board.fileUuid+ '_'+board.fileName+')'}"></div>
+
         <div class="board-item-info">
               <span class="like">
                 <i class="fas fa-heart"></i>
