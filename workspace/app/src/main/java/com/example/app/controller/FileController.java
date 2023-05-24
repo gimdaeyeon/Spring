@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 @RestController
@@ -59,8 +60,7 @@ public class FileController {
 //        subString(index) : 문자열에서 해당 인덱스 번호 까지만 잘라준다.
         name = name.substring(name.indexOf("_")+1);
 
-        headers.add("Content-Disposition","attachment;filename="+new String(name.getBytes(),"UTF-8"));
-
+        headers.add("Content-Disposition","attachment;filename="+ URLEncoder.encode(name,"UTF-8"));
         return new ResponseEntity<>(resource, headers, HttpStatus.OK);
     }
 

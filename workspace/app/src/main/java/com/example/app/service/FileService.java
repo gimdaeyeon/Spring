@@ -47,7 +47,7 @@ public class FileService {
 //     파일 저장 처리
     public FileDto saveFile(MultipartFile file) throws IOException{
 //        사용자가 올린 파일 이름(확장자를 포함)
-        String originName = file.getOriginalFilename();
+        String originName = new String(file.getOriginalFilename().getBytes(),"UTF-8");                     ;
 
 //        파일 이름에 붙여줄 uuid 생성(파일이름 중복이 나오지 않게 처리)
         UUID uuid = UUID.randomUUID();
