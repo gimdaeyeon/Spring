@@ -1,7 +1,9 @@
 package com.example.app.controller;
 
 import com.example.app.dto.BoardDto;
+import com.example.app.dto.FileDto;
 import com.example.app.service.BoardService;
+import com.example.app.service.FileService;
 import com.example.app.vo.BoardVo;
 import com.example.app.vo.Criteria;
 import com.example.app.vo.PageVo;
@@ -24,6 +26,7 @@ import static com.example.app.vo.Url.*;
 @RequiredArgsConstructor
 public class BoardController {
     private final BoardService boardService;
+    private final FileService fileService;
     @GetMapping("/list")
     public String showBoardList(Model model,Criteria criteria){
         List<BoardVo> boardList=boardService.findAll(criteria);
@@ -38,12 +41,22 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public RedirectView boardWrite(BoardDto boardDto, HttpServletRequest req, RedirectAttributes redirectAttributes){
+    public RedirectView boardWrite(BoardDto boardDto, HttpServletRequest req, RedirectAttributes redirectAttributes,
+                                   @RequestParam("boardFile")List<FileDto> files){
         Long userNumber = (Long)req.getSession().getAttribute("userNumber");
         boardDto.setUserNumber(userNumber);
         boardService.register(boardDto);
 
         redirectAttributes.addFlashAttribute("boardNumber",boardDto.getBoardNumber());
+
+        if(files!=null){
+//            fileService.
+
+        }
+
+
+
+
         return new RedirectView("/board/list");
     }
 

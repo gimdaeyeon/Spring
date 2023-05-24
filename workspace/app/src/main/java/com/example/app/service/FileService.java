@@ -28,11 +28,12 @@ public class FileService {
     @Value("${file.dir}")
     private String fileDir;
 
+//    사진등록
     public void register(FileDto fileDto){
         if(fileDto == null) { throw new IllegalArgumentException("파일 정보 누락"); }
         fileMapper.insert(fileDto);
     }
-
+//    사진 삭제
     public void remove(Long boardNumber){
         if (boardNumber == null) {
             throw new IllegalArgumentException("게시물 번호 누락(file)");
@@ -40,6 +41,7 @@ public class FileService {
         fileMapper.delete(boardNumber);
     }
 
+//  게시글번호로 사진조회
     public List<FileDto> findList(Long boardNumber){
         return fileMapper.selectList(boardNumber);
     }
@@ -105,8 +107,6 @@ public class FileService {
             register(fileDto);
         }
     }
-
-
 
     //    파일이 저장되는 하위 경로를 현재 날짜로 설정할 것이기 때문에 현재날짜를 구한다.
     private String getUploadPath(){
