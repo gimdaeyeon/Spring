@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -62,7 +63,11 @@ public class BoardController {
         redirectAttributes.addFlashAttribute("boardNumber", boardDto.getBoardNumber());
 
         if(files !=null){
-
+            try {
+                fileService.registerAndSaveFiles(files,boardDto.getBoardNumber());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         return new RedirectView("/board/list");
