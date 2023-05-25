@@ -34,6 +34,7 @@ public class BoardService {
         if(boardNumber==null){
             throw new IllegalArgumentException("존재하지 않는 게시물");
         }
+        fileService.remove(boardNumber);
         boardMapper.delete(boardNumber);
     }
 //    수정
@@ -50,9 +51,6 @@ public class BoardService {
         if(boardDto==null||files==null){
             throw new IllegalArgumentException("게시글 수정 매개변수 null체크");
         }
-
-
-
         fileService.remove(boardDto.getBoardNumber());
         fileService.registerAndSaveFiles(files, boardDto.getBoardNumber());
         boardMapper.update(boardDto);
@@ -60,15 +58,7 @@ public class BoardService {
 
 
 
-
-
-
-
-
-
-
 //    조회
-
     /**
      *
      * @param boardNumber

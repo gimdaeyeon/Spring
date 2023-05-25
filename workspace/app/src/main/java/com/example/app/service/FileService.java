@@ -38,6 +38,19 @@ public class FileService {
         if (boardNumber == null) {
             throw new IllegalArgumentException("게시물 번호 누락(file)");
         }
+        List<FileDto> fileList = findList(boardNumber);
+
+        for(FileDto file : fileList){
+            File target = new File(fileDir,file.getFileUploadPath()+"/"+file.getFileUuid()+"_"+file.getFileName());
+            File thumbnail = new File(fileDir,file.getFileUploadPath()+"/th_"+ file.getFileUuid()+"_"+file.getFileName());
+
+            if(target.exists()){
+                target.delete();
+            }
+            if(thumbnail.exists()){
+                thumbnail.delete();
+            }
+        }
         fileMapper.delete(boardNumber);
     }
 
