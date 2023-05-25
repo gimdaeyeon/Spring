@@ -88,8 +88,13 @@ public class BoardController {
     }
 
     @PostMapping("/modify")
-    public RedirectView boardModify(BoardDto boardDto, RedirectAttributes redirectAttributes){
-        boardService.modify(boardDto);
+    public RedirectView boardModify(BoardDto boardDto, RedirectAttributes redirectAttributes,
+                                    @RequestParam("boardFile")List<MultipartFile> files){
+        try {
+            boardService.modify(boardDto, files);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         redirectAttributes.addAttribute("boardNumber", boardDto.getBoardNumber());
         return new RedirectView("/board/view");
     }

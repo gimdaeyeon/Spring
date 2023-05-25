@@ -5,9 +5,12 @@ import com.example.app.mapper.BoardMapper;
 import com.example.app.vo.BoardVo;
 import com.example.app.vo.Criteria;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.MultipartStream;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +19,7 @@ import java.util.Optional;
 @Transactional
 public class BoardService {
     private final BoardMapper boardMapper;
+    private final FileService fileService;
 
 
     //     추가
@@ -39,6 +43,30 @@ public class BoardService {
         }
         boardMapper.update(boardDto);
     }
+
+//    트랜젝션을 적용하여 하나의 쿼리에서 오류가 나면 모두 록백시킨다.
+//    주의사항 : @Trasactionl을 붙인 메소드에서 같은 클래스에 선언한 메소드를 사용하면 트랜젝션이 적용되지 않는다.
+    public void modify(BoardDto boardDto, List<MultipartFile> files) throws IOException{
+        if(boardDto==null||files==null){
+            throw new IllegalArgumentException("게시글 수정 매개변수 null체크");
+        }
+
+
+
+        fileService.remove(boardDto.getBoardNumber());
+        fileService.registerAndSaveFiles(files, boardDto.getBoardNumber());
+        boardMapper.update(boardDto);
+    }
+
+
+
+
+
+
+
+
+
+
 //    조회
 
     /**
