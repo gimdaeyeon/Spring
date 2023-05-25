@@ -44,7 +44,7 @@ public class BoardController {
 
     @PostMapping("/write")
     public RedirectView boardWrite(BoardDto boardDto, HttpServletRequest req, RedirectAttributes redirectAttributes,
-                                   @RequestParam("boardFile")List<MultipartFile> files){
+                          @RequestParam("boardFile")List<MultipartFile> files){
         Long userNumber = (Long)req.getSession().getAttribute("userNumber");
         boardDto.setUserNumber(userNumber);
         boardService.register(boardDto);

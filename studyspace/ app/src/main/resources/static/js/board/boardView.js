@@ -43,7 +43,7 @@ function displayAjax(){
                 let fileName = file.fileUploadPath+'/'+file.fileUuid+'_'+file.fileName;
                 text+=`
                    <a href="/files/download?fileName=${fileName}">
-                    <img src="/files/display?fileName=${fileName}" data-number="${file.fileNumber}" data-name="${file.fileName}" />
+                      <img src="/files/display?fileName=${fileName}" data-number="${file.fileNumber}" data-name="${fileName}" />
                    </a>
                 `;
             });

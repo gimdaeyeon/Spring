@@ -46,7 +46,7 @@ public class BoardController {
 
     @PostMapping("/write")
     public RedirectView boardWrite(BoardDto boardDto, HttpServletRequest req, RedirectAttributes redirectAttributes
-        ,@RequestParam("boardFile") List<MultipartFile> files){
+        ,@RequestParam("boardFile")List<MultipartFile> files){
 //        RedirectAttributes 는 리다이렉트 전용 Model객체라고 생각하면 된다.
         Long userNumber = (Long)req.getSession().getAttribute("userNumber");
         boardDto.setUserNumber(userNumber);
@@ -69,7 +69,6 @@ public class BoardController {
                 e.printStackTrace();
             }
         }
-
         return new RedirectView("/board/list");
     }
 

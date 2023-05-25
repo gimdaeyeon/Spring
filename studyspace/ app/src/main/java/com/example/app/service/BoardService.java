@@ -1,5 +1,4 @@
 package com.example.app.service;
-
 import com.example.app.dto.BoardDto;
 import com.example.app.dto.UserDto;
 import com.example.app.mapper.BoardMapper;

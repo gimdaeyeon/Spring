@@ -75,7 +75,7 @@ public class FileService {
         File uploadPath = new File(fileDir,getUploadPath());
 
 //        경로가 존재하지 않는다면(폴더가 없으면)
-        if(uploadPath.exists()){
+        if(!uploadPath.exists()){
 //         경로에 필요한 폴더를 생성한다.
             uploadPath.mkdirs();
         }
@@ -115,7 +115,7 @@ public class FileService {
      */
     public void registerAndSaveFile(List<MultipartFile> files, Long boardNumber) throws IOException{
         for(MultipartFile file: files){
-            FileDto fileDto =saveFile(file);
+            FileDto fileDto = saveFile(file);
             fileDto.setBoardNumber(boardNumber);
             register(fileDto);
         }
