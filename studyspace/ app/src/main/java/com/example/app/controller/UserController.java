@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
-import static com.example.app.vo.Url.*;
 
 @Controller
-@RequestMapping(USER_URL)
+@RequestMapping("/user/*")
 @RequiredArgsConstructor
 public class UserController {
     public final UserService userService;

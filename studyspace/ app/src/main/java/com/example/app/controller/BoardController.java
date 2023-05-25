@@ -14,19 +14,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
-import static com.example.app.vo.Url.*;
 
 @Controller
-@RequestMapping(BOARD_URL)
+@RequestMapping("/board/*")
 @RequiredArgsConstructor
 public class BoardController {
     private final BoardService boardService;
     private final FileService fileService;
+
     @GetMapping("/list")
     public String showBoardList(Model model,Criteria criteria){
         List<BoardVo> boardList=boardService.findAll(criteria);
@@ -42,7 +44,7 @@ public class BoardController {
 
     @PostMapping("/write")
     public RedirectView boardWrite(BoardDto boardDto, HttpServletRequest req, RedirectAttributes redirectAttributes,
-                                   @RequestParam("boardFile")List<FileDto> files){
+                                   @RequestParam("boardFile")List<MultipartFile> files){
         Long userNumber = (Long)req.getSession().getAttribute("userNumber");
         boardDto.setUserNumber(userNumber);
         boardService.register(boardDto);
@@ -50,13 +52,10 @@ public class BoardController {
         redirectAttributes.addFlashAttribute("boardNumber",boardDto.getBoardNumber());
 
         if(files!=null){
-//            fileService.
-
+            try {
+                fileService.registerAndSaveFile(files,boardDto.getBoardNumber());
+            } catch (IOException e) {e.printStackTrace();}
         }
-
-
-
-
         return new RedirectView("/board/list");
     }
 
@@ -72,8 +71,13 @@ public class BoardController {
         return "board/boardModify";
     }
     @PostMapping("/modify")
-    public RedirectView boardModify(BoardDto boardDto,RedirectAttributes redirectAttributes){
-        boardService.modify(boardDto);
+    public RedirectView boardModify(BoardDto boardDto,RedirectAttributes redirectAttributes
+                ,@RequestParam("boardFile")List<MultipartFile>files){
+        try {
+            boardService.modify(boardDto,files);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         redirectAttributes.addAttribute("boardNumber",boardDto.getBoardNumber());
         return new RedirectView("/board/view");
     }

@@ -25,7 +25,7 @@ class ReplyMapperTest {
     @BeforeEach
     void setUp() {
         replyDto = new ReplyDto();
-        replyDto.setReplyContent("testContent");
+        replyDto.setReplyContent("님들ㅎㅇㅎㅇ");
         replyDto.setUserNumber(4L);
         replyDto.setBoardNumber(90L);
     }
@@ -37,7 +37,6 @@ class ReplyMapperTest {
 
         assertThat(list.get(0).getReplyContent()).isEqualTo(replyDto.getReplyContent());
     }
-
 
     @Test
     void select() {

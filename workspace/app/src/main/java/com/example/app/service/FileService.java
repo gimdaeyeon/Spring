@@ -108,7 +108,7 @@ public class FileService {
     }
 
     /**
-     * 파일 리스트를 DB들록 및 저장 처리
+     * 파일 리스트를 DB등록 및 저장 처리
      *
      * @param files 여러 파일을 담은 리스트
      * @param boardNumber 파일이 속하는 게시글 번호

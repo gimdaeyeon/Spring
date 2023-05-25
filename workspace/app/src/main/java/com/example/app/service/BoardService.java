@@ -45,7 +45,7 @@ public class BoardService {
         boardMapper.update(boardDto);
     }
 
-//    트랜젝션을 적용하여 하나의 쿼리에서 오류가 나면 모두 록백시킨다.
+//    트랜젝션을 적용하여 하나의 쿼리에서 오류가 나면 모두 롤백시킨다.
 //    주의사항 : @Trasactionl을 붙인 메소드에서 같은 클래스에 선언한 메소드를 사용하면 트랜젝션이 적용되지 않는다.
     public void modify(BoardDto boardDto, List<MultipartFile> files) throws IOException{
         if(boardDto==null||files==null){
@@ -55,8 +55,6 @@ public class BoardService {
         fileService.registerAndSaveFiles(files, boardDto.getBoardNumber());
         boardMapper.update(boardDto);
     }
-
-
 
 //    조회
     /**

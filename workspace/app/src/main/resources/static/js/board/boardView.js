@@ -86,10 +86,6 @@ function displayAjax(){
 }
 
 
-
-
-
-
 // 리플 작성 완료 처리
 $('.btn-reply').on('click', function (){
 

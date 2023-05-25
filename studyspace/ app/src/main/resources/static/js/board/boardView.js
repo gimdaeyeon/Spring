@@ -29,6 +29,39 @@ $('.btn-back').on('click', function (){
     window.location.href = '/board/list';
 })
 
+displayAjax();
+function displayAjax(){
+    let boardNumber = $('.board-num').val();
+    $.ajax({
+        url: '/files/imgList',
+        type: 'get',
+        data: {boardNumber:boardNumber},
+        success : function (files){
+            let text = '';
+
+            files.forEach(file=>{
+                let fileName = file.fileUploadPath+'/'+file.fileUuid+'_'+file.fileName;
+                text+=`
+                   <a href="/files/download?fileName=${fileName}">
+                    <img src="/files/display?fileName=${fileName}" data-number="${file.fileNumber}" data-name="${file.fileName}" />
+                   </a>
+                `;
+            });
+
+            $('.post-images').html(text);
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+
 // 리플 작성 완료 처리
 $('.btn-reply').on('click', function (){
 

@@ -9,7 +9,6 @@
         <typeAlias type="com.example.app.vo.BoardVo" alias="boardVo"/>
         <typeAlias type="com.example.app.vo.Criteria" alias="criteria"/>
         <typeAlias type="com.example.app.vo.PageVo" alias="pageVo"/>
-        <typeAlias type="com.example.app.vo.Url" alias="url"/>
     </typeAliases>
 
 </configuration>
