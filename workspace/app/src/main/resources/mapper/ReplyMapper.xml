@@ -12,6 +12,7 @@
         FROM TBL_USER U JOIN TBL_REPLY R
         ON U.USER_NUMBER =R.USER_NUMBER
         WHERE BOARD_NUMBER = #{boardNumber}
+        ORDER BY REPLY_NUMBER DESC
     </select>
 
     <select id="select" resultType="replyVo">

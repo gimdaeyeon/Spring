@@ -1,10 +1,38 @@
 import * as reply from '../module/reply.js';
 //모듈 경로는 일반적으로 상대경로로 접근한다.
+const boardNumber = $('.board-num').val();
+reply.getList(boardNumber, showReply, showError);
 
-reply.getList(90, showReply, showError);
+function showReply(replies){
+    // console.log(result);
+    let text = '';
 
-function showReply(result){
-    console.log(result);
+    replies.forEach(r =>{
+        text+=`
+            <div class="reply" data-num="${r.replyNumber}">
+                    <div class="reply-box">
+                        <div class="reply-box__writer">${r.userId}</div>
+                        <div class="reply-box__content">${r.replyContent}</div>
+                    </div>
+                    <div class="reply-btn-box">
+                `;
+
+        if(r.userNumber==loginNumber){
+            text+=`
+                        <span class="reply-btns"></span>
+                        <div class="reply-btns__box none">
+                            <div class="reply-remove-btn">삭제</div>
+                            <div class="reply-modify-btn">수정</div>
+                        </div>`;
+            }
+            text+=`
+                    </div>
+                </div>
+        `;
+
+    });
+    $('.reply-list-wrap').html(text);
+
 }
 
 function showError(a, b, c){
