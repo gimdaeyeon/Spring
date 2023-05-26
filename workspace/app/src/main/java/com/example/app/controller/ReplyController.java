@@ -2,12 +2,19 @@ package com.example.app.controller;
 
 import com.example.app.dto.ReplyDto;
 import com.example.app.service.ReplyService;
+import com.example.app.vo.BoardVo;
+import com.example.app.vo.Criteria;
+import com.example.app.vo.PageVo;
 import com.example.app.vo.ReplyVo;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,9 +24,11 @@ public class ReplyController {
 
 //   보통 REST에서 post는 create를 처리한다.
     @PostMapping("/reply")
-    public String replyRegister(@RequestBody ReplyDto replyDto){
+    public void replyRegister(@RequestBody ReplyDto replyDto, HttpServletRequest req){
+        Long userNumber= (Long)req.getSession().getAttribute("userNumber");
+        replyDto.setUserNumber(userNumber);
+
         replyService.register(replyDto);
-        return "작성 성공!";
     }
 
 //   보통 REST에서 get은 조회를 담당한다.
@@ -61,6 +70,18 @@ public class ReplyController {
         return replyService.findReply(replyNumber);
     }
 
+    @GetMapping("/list/{boardNumber}/{page}")
+    public Map<String,Object> replyListPage(@PathVariable("boardNumber")Long boardNumber,
+                                       @PathVariable("page")int page){
+        Criteria criteria = new Criteria(page,10);
+        PageVo pageVo = new PageVo(criteria,replyService.findTotal(boardNumber));
+        List<ReplyVo> replyList =  replyService.findListPage(criteria,boardNumber);
+        Map<String,Object> replyMap = new HashMap<>();
+        replyMap.put("pageVo",pageVo);
+        replyMap.put("replyList",replyList);
+
+        return replyMap;
+    }
 
 
 

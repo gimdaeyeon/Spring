@@ -10,7 +10,7 @@
         SELECT REPLY_NUMBER, REPLY_CONTENT, REPLY_REGISTER_DATE, REPLY_UPDATE_DATE, BOARD_NUMBER, U.USER_NUMBER,
                U.USER_ID
         FROM TBL_USER U JOIN TBL_REPLY R
-        ON U.USER_NUMBER =R.USER_NUMBER
+                             ON U.USER_NUMBER = R.USER_NUMBER
         WHERE BOARD_NUMBER = #{boardNumber}
         ORDER BY REPLY_NUMBER DESC
     </select>
@@ -19,7 +19,7 @@
         SELECT REPLY_NUMBER, REPLY_CONTENT, REPLY_REGISTER_DATE, REPLY_UPDATE_DATE, BOARD_NUMBER, U.USER_NUMBER,
                U.USER_ID
         FROM TBL_USER U JOIN TBL_REPLY R
-        ON REPLY_NUMBER = #{replyNumber} AND R.USER_NUMBER = U.USER_NUMBER
+                             ON REPLY_NUMBER = #{replyNumber} AND R.USER_NUMBER = U.USER_NUMBER
     </select>
 
     <update id="update">
@@ -32,6 +32,32 @@
         DELETE FROM TBL_REPLY
         WHERE REPLY_NUMBER = #{replyNumber}
     </delete>
+
+    <select id="selectListPage" resultType="replyVo">
+        SELECT REPLY_NUMBER, REPLY_CONTENT, REPLY_REGISTER_DATE, REPLY_UPDATE_DATE, BOARD_NUMBER, USER_NUMBER,
+               USER_ID
+        FROM (
+                 SELECT ROWNUM RN,
+                        REPLY_NUMBER, REPLY_CONTENT, REPLY_REGISTER_DATE, REPLY_UPDATE_DATE, BOARD_NUMBER, USER_NUMBER,
+                        USER_ID
+                 FROM(
+                         SELECT REPLY_NUMBER, REPLY_CONTENT, REPLY_REGISTER_DATE, REPLY_UPDATE_DATE, BOARD_NUMBER, U.USER_NUMBER,
+                                U.USER_ID
+                         FROM TBL_USER U JOIN TBL_REPLY R
+                                              ON BOARD_NUMBER = #{boardNumber} AND U.USER_NUMBER = R.USER_NUMBER
+                         ORDER BY REPLY_NUMBER DESC
+                     )
+            <![CDATA[
+                 WHERE ROWNUM <= #{criteria.page} * #{criteria.amount}
+            ]]>
+        )
+        WHERE RN > ( #{criteria.page} - 1 ) * #{criteria.amount}
+    </select>
+
+    <select id="selectTotal" resultType="_int">
+        SELECT COUNT(REPLY_NUMBER) FROM TBL_REPLY
+        WHERE BOARD_NUMBER =#{boardNumber}
+    </select>
 
 </mapper>
 

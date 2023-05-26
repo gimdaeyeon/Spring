@@ -2,6 +2,7 @@ package com.example.app.service;
 
 import com.example.app.dto.ReplyDto;
 import com.example.app.mapper.ReplyMapper;
+import com.example.app.vo.Criteria;
 import com.example.app.vo.ReplyVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -57,4 +58,24 @@ public class ReplyService {
         }
         replyMapper.delete(replyNumber);
     }
+//    댓글 페이징
+    public List<ReplyVo> findListPage(Criteria criteria, Long boardNumber){
+        if (boardNumber == null||criteria==null) {
+            throw new IllegalArgumentException("댓글 페이징 정보 누락");
+        }
+        return replyMapper.selectListPage(criteria, boardNumber);
+    }
+
+    public int findTotal(Long boardNumber){
+        if (boardNumber == null) {
+            throw new IllegalArgumentException("게시물 번호 누락");
+        }
+
+        return replyMapper.selectTotal(boardNumber);
+    }
+
+
+
+
+
 }

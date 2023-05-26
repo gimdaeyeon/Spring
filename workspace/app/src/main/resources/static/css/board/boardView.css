@@ -213,3 +213,9 @@
     margin-left: 10px;
     background-color: #00c7ae;
 }
+
+.reply-time {
+    font-size: 10px;
+    color: #777777;
+    min-width: 50px;
+}

@@ -1,44 +1,123 @@
 import * as reply from '../module/reply.js';
 //모듈 경로는 일반적으로 상대경로로 접근한다.
 const boardNumber = $('.board-num').val();
-reply.getList(boardNumber, showReply, showError);
+let page = 1;
 
-function showReply(replies){
-    // console.log(result);
+reply.getListPage({boardNumber : boardNumber, page : page}, showReply, showError);
+
+function showReply(map){
+    // console.log(map);
+
     let text = '';
 
-    replies.forEach(r =>{
-        text+=`
-            <div class="reply" data-num="${r.replyNumber}">
-                    <div class="reply-box">
-                        <div class="reply-box__writer">${r.userId}</div>
-                        <div class="reply-box__content">${r.replyContent}</div>
-                    </div>
-                    <div class="reply-btn-box">
-                `;
+    map.replyList.forEach(r => {
+        text += `
+        <div class="reply" data-num="${r.replyNumber}">
+          <div class="reply-box">
+            <div class="reply-box__writer">${r.userId}</div>
+            <div class="reply-box__content">${r.replyContent}</div>
+          </div>
+          <div class="reply-time">
+            ${reply.timeForToday(r.replyRegisterDate == r.replyUpdateDate ? r.replyRegisterDate : r.replyUpdateDate)}
+          </div>  
+          <div class="reply-btn-box">
+            `;
 
-        if(r.userNumber==loginNumber){
-            text+=`
-                        <span class="reply-btns"></span>
-                        <div class="reply-btns__box none">
-                            <div class="reply-remove-btn">삭제</div>
-                            <div class="reply-modify-btn">수정</div>
-                        </div>`;
-            }
-            text+=`
-                    </div>
-                </div>
+        if(r.userNumber == loginNumber){
+            text += `    
+                <span class="reply-btns"></span>
+                <div class="reply-btns__box none">
+                  <div class="reply-remove-btn">삭제</div>
+                  <div class="reply-modify-btn">수정</div>
+                </div>`;
+        }
+
+        text += `
+            </div>
+        </div>
         `;
-
     });
-    $('.reply-list-wrap').html(text);
 
+    $('.reply-list-wrap').html(text);
 }
+
+function appendText(map){
+    let text = '';
+
+    map.replyList.forEach(r => {
+        text += `
+        <div class="reply" data-num="${r.replyNumber}">
+          <div class="reply-box">
+            <div class="reply-box__writer">${r.userId}</div>
+            <div class="reply-box__content">${r.replyContent}</div>
+          </div>
+          <div class="reply-time">
+            ${reply.timeForToday(r.replyRegisterDate == r.replyUpdateDate ? r.replyRegisterDate : r.replyUpdateDate)}
+          </div>  
+          <div class="reply-btn-box">
+            `;
+
+        if(r.userNumber == loginNumber){
+            text += `    
+                <span class="reply-btns"></span>
+                <div class="reply-btns__box none">
+                  <div class="reply-remove-btn">삭제</div>
+                  <div class="reply-modify-btn">수정</div>
+                </div>`;
+        }
+
+        text += `
+            </div>
+        </div>
+        `;
+    });
+
+    $('.reply-list-wrap').append(text);
+}
+
+//무한 스크롤 페이징
+$(window).on('scroll', function(){
+    console.log($(window).scrollTop());
+//  $(window).scrollTop() : 현재 브라우저의 스크롤 위치를 의미한다.
+    console.log(`document : ${$(document).height()}`)
+//    $(document).height() : 문서 전체의 높이를 의미한다.
+    console.log(`window : ${$(window).height()}`)
+//    $(window).height() : 브라우저 화면의 높이를 의미한다.
+
+    //현재 브라우저 스크롤의 위치 == 문서 높이 - 화면 높이      -> 문서 마지막에 스크롤이 도작했을 때
+    if(Math.round($(window).scrollTop()) == $(document).height() - $(window).height()){
+        console.log(++page);
+        reply.getListPage({boardNumber : boardNumber, page : page}, appendText, showError);
+    }
+});
+
 
 function showError(a, b, c){
     console.error(c);
 }
 
+//리플 작성 완료 처리
+$('.btn-reply').on('click', function(){
+    let content = $('#reply-content').val();
+
+    let replyObj = {
+        replyContent : content,
+        boardNumber : boardNumber
+    }
+
+    page = 1;
+
+    reply.add(replyObj,
+        function() {
+            reply.getListPage({boardNumber : boardNumber, page : page}, showReply, showError);
+        }
+        ,showError);
+
+    $('#reply-content').val('');
+});
+
+
+//======================================================
 
 $('.reply-list-wrap').on('click', '.reply-btns', function () {
     let $replyBtnBox = $(this).closest('.reply-btn-box').find('.reply-btns__box');
@@ -47,8 +126,8 @@ $('.reply-list-wrap').on('click', '.reply-btns', function () {
 });
 
 $('body').click(function (e) {
-    if (e.target == $('.reply-btns')[0]) {
-        console.log('aa');
+    if ($(e.target).hasClass('reply-btns')) {
+        // console.log('aa');
         return;
     }
     if (!$('.reply-btns__box').has(e.target).length) {
@@ -114,14 +193,16 @@ function displayAjax(){
 }
 
 
-// 리플 작성 완료 처리
-$('.btn-reply').on('click', function (){
-
-});
 
 // 리플 삭제 버튼 처리
 $('.reply-list-wrap').on('click', '.reply-remove-btn', function () {
     $('.reply-btns__box').addClass('none');
+
+    let replyNumber = $(this).closest('.reply').data('num');
+    page=1;
+    reply.remove(replyNumber, function(){
+        reply.getListPage({boardNumber : boardNumber, page : page}, showReply, showError);
+    }, showError);
 });
 
 // 리플 수정 버튼 처리
@@ -138,5 +219,18 @@ $('.reply-list-wrap').on('click', '.reply-modify-btn', function () {
 
 // 리플 수정 완료 처리
 $('.reply-list-wrap').on('click', '.modify-content-btn', function () {
-    console.log('modify!!!');
+    // console.log('modify!!!');
+    let replyNumber = $(this).closest('.reply').data('num');
+    let replyContent = $(this).closest('.modify-box').find('.modify-content').val();
+
+    let replyObj = {
+        replyNumber : replyNumber,
+        replyContent : replyContent
+    }
+    page=1;
+    reply.modify(replyObj, function (){
+        reply.getListPage({boardNumber : boardNumber, page : page}, showReply, showError);
+    }, showError);
 });
+
+
