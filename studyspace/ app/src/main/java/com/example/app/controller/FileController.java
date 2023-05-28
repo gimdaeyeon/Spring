@@ -35,6 +35,7 @@ public class FileController {
     public List<FileDto> imgList(Long boardNumber){
         return fileService.findList(boardNumber);
     }
+
 //    서버 컴퓨터에 저장된 파일을 복사하여 넘겨주는 핸들러
     @GetMapping("/display")
     public byte[] display(String fileName)throws IOException {

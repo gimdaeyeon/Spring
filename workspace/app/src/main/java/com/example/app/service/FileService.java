@@ -69,7 +69,7 @@ public class FileService {
         UUID uuid = UUID.randomUUID();
 
 //        uuid와 파일이름을 합쳐준다.
-        String sysName = uuid.toString() + "_" + originName;
+        String sysName = uuid.toString()+"_"+originName;
 
         File uploadPath = new File(fileDir, getUploadPath());
 
@@ -114,7 +114,7 @@ public class FileService {
      * @param boardNumber 파일이 속하는 게시글 번호
      * @throws IOException
      */
-    public void registerAndSaveFiles(List<MultipartFile> files, Long boardNumber) throws IOException{
+    public void     registerAndSaveFiles(List<MultipartFile> files, Long boardNumber) throws IOException{
         for(MultipartFile file : files){
             FileDto fileDto = saveFile(file);
             fileDto.setBoardNumber(boardNumber);
