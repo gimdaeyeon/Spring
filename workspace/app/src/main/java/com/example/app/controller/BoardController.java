@@ -1,5 +1,6 @@
 package com.example.app.controller;
 
+import com.example.app.AppApplication;
 import com.example.app.dto.BoardDto;
 import com.example.app.service.BoardService;
 import com.example.app.service.FileService;
@@ -105,21 +106,4 @@ public class BoardController {
     }
 
 
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

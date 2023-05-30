@@ -226,3 +226,107 @@ a{
     background-color: #00c7ae;
     color: white;
 }
+
+/* 채팅 버튼 */
+.chatbot-button {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background-color: #00c7ae;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+/* 채팅 창 */
+.chatbot {
+    display: none; /* 채팅 창을 기본적으로 숨깁니다 */
+    position: fixed;
+    right: 20px;
+    bottom: 80px;
+    width: 300px;
+    height: 500px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.chatbot-header {
+    padding: 10px;
+    background-color: #00c7ae;
+    color: white;
+    border-radius: 10px 10px 0 0;
+}
+.close-box {
+    text-align: right;
+}
+.chatbot-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+.chatbot-body {
+    height: 78%;
+    padding: 10px;
+    overflow-y: auto; /* 스크롤이 가능하도록 설정 */
+}
+
+.chatbot-footer {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#chatbot-send {
+    margin-left: 10px;
+    padding: 5px;
+    background-color: #00c7ae;
+    border: #00c7ae 1px solid;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#chatbot-input {
+    height: 28px;
+    padding-left: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.message {
+    /* border: black 1px solid; */
+    margin: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.message-text {
+    margin: 0 10px 0 10px;
+    border: #00c7ae 1px solid;
+    min-height: 30px;
+    line-height: 30px;
+    border-radius: 10px;
+    padding: 3px 5px;
+}
+
+.user-message {
+}
+
+.bot-message {
+    text-align: right;
+    justify-content: right;
+}
+
+.bot-message > .message-text {
+    background-color: #00c7ae;
+    color: white;
+}
