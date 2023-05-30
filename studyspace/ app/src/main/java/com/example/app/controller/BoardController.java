@@ -23,8 +23,8 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/board/*")
 @RequiredArgsConstructor
+@RequestMapping("/board/*")
 public class BoardController {
     private final BoardService boardService;
     private final FileService fileService;

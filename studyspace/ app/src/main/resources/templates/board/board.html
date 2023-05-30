@@ -23,7 +23,8 @@ replace를 사용한 태그는 해당 fragment로 교체된다.-->
             <div class="board-img-box">
 
                 <div th:if="${board.fileName==null}" class="board-item-image" style="background-image: url(https://via.placeholder.com/300x200)"></div>
-                <div th:unless="${board.fileName==null}" class="board-item-image" th:style="${'background-image: url(/upload/'+board.fileUploadPath+'/th_'+board.fileUuid+ '_'+board.fileName+')'}"></div>
+                <div th:unless="${board.fileName==null}" class="board-item-image" th:style="'background-image: url(/upload/' + ${board.fileUploadPath} + '/th_' + ${board.fileUuid} + '_' + ${board.fileName} + ')'"></div>
+
 
                 <div class="board-item-info">
               <span class="like">
@@ -78,6 +79,37 @@ replace를 사용한 태그는 해당 fragment로 교체된다.-->
 <!--플레쉬 영역의 데이터는 그냥key로 가져오면 되고
     쿼리스트링의 저장한 데이터는 param.boardNumber를 사용하여 가져온다.-->
 <input type="hidden" class="board-num" th:value="${boardNumber}">
+<!-- 채팅 버튼과 창 -->
+<div id="chatbot" class="chatbot">
+    <div id="chatbot-header" class="chatbot-header">
+        <div class="close-box">
+            <button id="chatbot-close" class="chatbot-close">X</button>
+        </div>
+        <h4>챗봇</h4>
+    </div>
+    <div id="chatbot-body" class="chatbot-body">
+        <!-- 메세지 위치-->
+        <div class="user-message message">
+            <div class="message-text">안녕</div>
+        </div>
+        <div class="bot-message message">
+            <div class="message-text">네 안녕하세요</div>
+        </div>
+    </div>
+    <div id="chatbot-footer" class="chatbot-footer">
+        <input type="text" id="chatbot-input" placeholder="궁금한것을 물어보세요!" />
+        <button id="chatbot-send">보내기</button>
+    </div>
+</div>
+
+<button id="chatbot-open" class="chatbot-button">
+    <!-- Font Awesome 채팅 아이콘 -->
+    <i class="fas fa-comment-dots"></i>
+</button>
+
+<!-- /페이징 처리 -->
+<!--플레쉬 영역의 데이터는 그냥key로 가져오면 되고
+    쿼리스트링의 저장한 데이터는 param.boardNumber를 사용하여 가져온다.-->
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script th:src="@{/js/board/board.js}"></script>
 <script>

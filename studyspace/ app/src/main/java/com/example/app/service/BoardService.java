@@ -35,6 +35,7 @@ public class BoardService {
         if (boardNumber == null) {
             throw new IllegalArgumentException("존재하지 않는 게시물");
         }
+        fileService.remove(boardNumber);
         boardMapper.delete(boardNumber);
     }
 

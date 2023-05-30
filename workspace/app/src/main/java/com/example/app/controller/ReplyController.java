@@ -64,7 +64,7 @@ public class ReplyController {
         replyService.remove(replyNumber);
     }
 
-//    댓글 1개 조회
+//       댓글 1개 조회
     @GetMapping("/{replyNumber}")
     public ReplyVo findReply(@PathVariable("replyNumber")Long replyNumber){
         return replyService.findReply(replyNumber);

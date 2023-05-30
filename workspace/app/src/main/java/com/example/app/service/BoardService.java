@@ -82,6 +82,4 @@ public class BoardService {
     public int getTotal(){
         return boardMapper.selectTotal();
     }
-
-
 }

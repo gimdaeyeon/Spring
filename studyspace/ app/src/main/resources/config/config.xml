@@ -6,9 +6,11 @@
         <typeAlias type="com.example.app.dto.UserDto" alias="userDto"/>
         <typeAlias type="com.example.app.dto.BoardDto" alias="boardDto"/>
         <typeAlias type="com.example.app.dto.FileDto" alias="fileDto"/>
+        <typeAlias type="com.example.app.dto.ReplyDto" alias="replyDto"/>
         <typeAlias type="com.example.app.vo.BoardVo" alias="boardVo"/>
         <typeAlias type="com.example.app.vo.Criteria" alias="criteria"/>
         <typeAlias type="com.example.app.vo.PageVo" alias="pageVo"/>
+        <typeAlias type="com.example.app.vo.ReplyVo" alias="replyVo"/>
     </typeAliases>
 
 </configuration>
