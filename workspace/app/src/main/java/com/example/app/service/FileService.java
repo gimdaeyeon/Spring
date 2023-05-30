@@ -114,7 +114,7 @@ public class FileService {
      * @param boardNumber 파일이 속하는 게시글 번호
      * @throws IOException
      */
-    public void     registerAndSaveFiles(List<MultipartFile> files, Long boardNumber) throws IOException{
+    public void registerAndSaveFiles(List<MultipartFile> files, Long boardNumber) throws IOException{
         for(MultipartFile file : files){
             FileDto fileDto = saveFile(file);
             fileDto.setBoardNumber(boardNumber);
@@ -126,6 +126,12 @@ public class FileService {
     private String getUploadPath(){
         return new SimpleDateFormat("yyyy/MM/dd").format(new Date());
     }
+
+    public List<FileDto> findOldList(){
+        return fileMapper.selectOldList();
+    }
+
+
 }
 
 

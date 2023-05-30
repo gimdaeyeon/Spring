@@ -16,6 +16,13 @@
         FROM TBL_FILE
         WHERE BOARD_NUMBER = #{boardNumber}
     </select>
+    
+    <select id="selectOldList" resultType="fileDto">
+        SELECT FILE_NUMBER,FILE_NAME,FILE_UPLOAD_PATH, FILE_UUID, BOARD_NUMBER
+        FROM TBL_FILE
+        WHERE FILE_UPLOAD_PATH = TO+CHAR(CURRENT_DATE -1,'YYYY/MM/DD')
+    </select>
+    
 
 
 </mapper>

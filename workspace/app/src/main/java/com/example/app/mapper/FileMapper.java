@@ -14,5 +14,7 @@ public interface FileMapper {
     public void delete(Long boardNumber);
 //    게시물 번호로 사진 조회
     public List<FileDto> selectList(Long boardNumber);
+    public List<FileDto> selectOldList();
+
 
 }
