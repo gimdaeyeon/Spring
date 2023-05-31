@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header class="header" th:replace="fragment/header :: header"></header>
+  <h1>Q&A Board</h1>
+<h2 th:if="${session.userNumber !=null }" th:text="${session.userNumber+'번 회원의 질문!!'}"></h2>
+</body>
+</html>

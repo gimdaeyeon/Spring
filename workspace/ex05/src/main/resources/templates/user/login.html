@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<header class="header" th:replace="fragment/header :: header"></header>
+<fieldset>
+  <legend>로그인</legend>
+  <form th:action="@{/user/login}" method="post">
+    <label for="id">id : </label>
+    <input type="text" name="userId" id="id"> <br>
+    <label for="password">pw : </label>
+    <input type="password" name="userPassword" id="password"> <br>
+    <button>로그인</button>
+    <!--        로그인에 성공하면 communityBoard로 이동한다.-->
+  </form>
+</fieldset>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<header class="header" th:replace="fragment/header :: header"></header>
+<fieldset>
+  <legend>회원 가입</legend>
+  <form th:action="@{/user/join}" method="post">
+    <label for="id">id : </label>
+    <input type="text" id="id" name="userId"> <br>
+    <label for="password">pw : </label>
+    <input type="password" id="password" name="userPassword"><br>
+    <label for="name">name : </label>
+    <input type="text" id="name" name="userName"><br>
+    <button>회원가입</button>
+    <!--    회원 가입이 완료되면 DB에 회원 정보를 저장하고 로그인 페이지로 이동해야 한다.-->
+  </form>
+</fieldset>
+</body>
+</html>
