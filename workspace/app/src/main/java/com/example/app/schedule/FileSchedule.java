@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,13 +52,35 @@ public class FileSchedule {
 
 //        이전 파일들의 전체경로를 List<Path>타입으로 저장한다.
         List<Path> fileListPaths = oldFileList.stream()
-                .map(fileDto -> Paths.get(fileDir, fileDto.getFileUploadPath(), fileDto.getFileUuid(), "_", fileDto.getFileName()))
+                .map(fileDto -> Paths.get(fileDir, fileDto.getFileUploadPath(), fileDto.getFileUuid() + "_" + fileDto.getFileName()))
                 .collect(Collectors.toList());
 
 //        이전 썸네일 파일들의 전체 경로를 fileListPaths에 추가한다.
         oldFileList.stream()
-                .map(fileDto -> Paths.get(fileDir, fileDto.getFileUploadPath(), "th_", fileDto.getFileUuid(), "_", fileDto.getFileName()))
+                .map(fileDto -> Paths.get(fileDir, fileDto.getFileUploadPath(), "th_" + fileDto.getFileUuid() + "_" + fileDto.getFileName()))
                 .collect(Collectors.toList()).forEach(path -> fileListPaths.add(path));
+
+//        이전 파일들이 들어있는 경로(파일 이름을 제외한)를 파일객체로 저장한다.
+        File directory = Paths.get(fileDir, getUploadPathOldFile()).toFile();
+
+//        파일객체는 폴더안에 있는 모든 파일 목록을 불러오는 기능이 있다. listFiles()
+        File[] files = directory.listFiles(file -> !fileListPaths.contains(file.toPath()));
+
+        if(files == null) {return;}
+
+        for(File file : files){
+            log.info(file.getPath() + " delete!!!");
+            file.delete();
+        }
+
+    }
+
+    //    1일전의 파일 경로를 만들어주는 메소드
+    private String getUploadPathOldFile(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        Calendar yesterday = Calendar.getInstance();
+        yesterday.add(Calendar.DATE, -1);
+        return sdf.format(yesterday.getTime());
     }
 }
 

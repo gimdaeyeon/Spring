@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+<!--        <typeAlias type="com.example.ex05.dto.UserDto" alias="userDto"/>-->
+<!--        <typeAlias type="com.example.ex05.dto.BoardDto" alias="boardDto"/>-->
+<!--        <typeAlias type="com.example.ex05.dto.ReplyDto" alias="replyDto"/>-->
+<!--        <typeAlias type="com.example.ex05.dto.FileDto" alias="fileDto"/>-->
+<!--        <typeAlias type="com.example.ex05.vo.BoardVo" alias="boardVo"/>-->
+<!--        <typeAlias type="com.example.ex05.vo.Criteria" alias="criteria"/>-->
+<!--        <typeAlias type="com.example.ex05.vo.ReplyVo" alias="replyVo"/>-->
+    </typeAliases>
+
+</configuration>

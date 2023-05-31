@@ -1,11 +1,13 @@
 package com.example.app.dto;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component
 @Data
-@RequiredArgsConstructor @NoArgsConstructor
+@NoArgsConstructor
 public class ReplyDto {
     private Long replyNumber;
     @NonNull
@@ -18,13 +20,4 @@ public class ReplyDto {
     private Long boardNumber;
     @NonNull
     private Long userNumber;
-
-//    @Builder
-//    public ReplyDto(String replyContent,String replyRegisterDate,String replyUpdateDate, Long boardNumber, Long userNumber) {
-//        this.replyContent = replyContent;
-//        this.replyRegisterDate = replyRegisterDate;
-//        this.replyUpdateDate = replyUpdateDate;
-//        this.boardNumber = boardNumber;
-//        this.userNumber = userNumber;
-//    }
 }
