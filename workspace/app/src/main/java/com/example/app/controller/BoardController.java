@@ -41,8 +41,7 @@ public class BoardController {
 
     @GetMapping("/write")
     public String boardWrite(HttpServletRequest req){
-        Long userNumber = (Long)req.getSession().getAttribute("userNumber");
-        return userNumber == null ? "user/login" : "board/boardWrite";
+        return "board/boardWrite";
     }
 
     @PostMapping("/write")

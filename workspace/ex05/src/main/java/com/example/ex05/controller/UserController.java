@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public RedirectView login(String userId, String userPassword, HttpServletRequest req){
+    public RedirectView login( String userId, String userPassword, HttpServletRequest req){
         try {
             Long userNumber = userService.findUserNumber(userId,userPassword);
             req.getSession().setAttribute("userNumber",userNumber);
@@ -50,8 +50,6 @@ public class UserController {
             e.printStackTrace();
             return new RedirectView("/user/login");
         }
-
-
         return new RedirectView("/board/community");
     }
 

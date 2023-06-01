@@ -34,6 +34,7 @@ class UserControllerTest {
 
 
     @Test
+    @DisplayName("회원가입 처리")
     void join() throws Exception {
         doNothing().when(userService).register(any(UserDto.class));
 
@@ -41,6 +42,7 @@ class UserControllerTest {
                 .param("userId", "aaa")
                 .param("userPassword", "1234")
         ).andExpect(MockMvcResultMatchers.status().is3xxRedirection())   //검증
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/user/login"))
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -49,6 +51,7 @@ class UserControllerTest {
     void testJoin() throws Exception {
         mockMvc.perform(get("/user/join"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("user/join"))
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -58,6 +61,7 @@ class UserControllerTest {
 
         mockMvc.perform(get("/user/login"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("user/login"))
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -66,10 +70,11 @@ class UserControllerTest {
     void testLogin() throws Exception {
         doReturn(1L).when(userService).findUserNumber(any(String.class), any(String.class));
 
-        mockMvc.perform(post("/user/join")
+        mockMvc.perform(post("/user/login")
                 .param("userId", "aaa")
                 .param("userPassword", "1234")
         ).andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/board/community"))
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -77,7 +82,7 @@ class UserControllerTest {
     @DisplayName("로그아웃 처리")
     void logout() throws Exception {
         mockMvc.perform(get("/user/logout")
-                .sessionAttr("userNumber", 1L))
+                .sessionAttr("userNumber", 1L))     //세션에 userNumber==1을 담아서 보낸다.
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
