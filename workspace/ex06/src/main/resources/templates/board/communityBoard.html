@@ -9,6 +9,12 @@
   <h1>Community Board</h1>
     <h2 th:if="${session.userNumber !=null }" th:text="${session.userNumber+'번 회원님 환영합니다.'}"></h2>
 
+    <div th:each="title : ${list}">
+        <div th:text="${title}"></div>
+    </div>
+
+
+
 
 </body>
 </html>
