@@ -73,10 +73,12 @@ public class BoardService {
                 .orElseThrow(()->{throw new IllegalArgumentException("존재하지 않는 게시물 번호");});
     }
 //   전체 조회
+
     @Transactional(readOnly = true)
     public List<BoardVo> findAll(Criteria criteria) {
         return boardMapper.selectAll(criteria);
     }
+
 //    전체 게시글 수 조회
     @Transactional(readOnly = true)
     public int getTotal(){

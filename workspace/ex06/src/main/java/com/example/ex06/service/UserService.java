@@ -1,5 +1,6 @@
 package com.example.ex06.service;
 
+import com.example.ex06.aspect.LoggingPointCut;
 import com.example.ex06.dto.UserDto;
 import com.example.ex06.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ public class UserService {
     private final UserMapper userMapper;
 
 //    회원가입
+    @LoggingPointCut
     public void register(UserDto userDto){
         if(userDto==null){
             throw new IllegalArgumentException("회원가입 정보 누락");

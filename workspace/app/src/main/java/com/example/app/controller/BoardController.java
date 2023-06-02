@@ -1,6 +1,7 @@
 package com.example.app.controller;
 
 import com.example.app.AppApplication;
+import com.example.app.aspect.annotation.LoggingPointcut;
 import com.example.app.dto.BoardDto;
 import com.example.app.service.BoardService;
 import com.example.app.service.FileService;
@@ -31,6 +32,7 @@ public class BoardController {
     private final FileService fileService;
 
 
+    @LoggingPointcut
     @GetMapping("/list")
     public String showBoardList(Criteria criteria, Model model){
         List<BoardVo> boardList = boardService.findAll(criteria);
