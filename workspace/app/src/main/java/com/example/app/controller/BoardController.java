@@ -8,6 +8,7 @@ import com.example.app.vo.BoardVo;
 import com.example.app.vo.Criteria;
 import com.example.app.vo.PageVo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
