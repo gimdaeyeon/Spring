@@ -9,20 +9,48 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script>
-    var xhr = new XMLHttpRequest();
-    var url = 'http://openapi.seoul.go.kr:8088/786e44785864656334354e61496a76/json/TbAdpWaitAnimalView/1/27/20220301'; /* URL */
-    xhr.open('GET', url);
-    xhr.onreadystatechange = function () {
-        if (this.readyState == xhr.DONE) {  // <== 정상적으로 준비되었을때
-            if(xhr.status == 200||xhr.status == 201){ // <== 호출 상태가 정상적일때
-                alert('Status: '+this.status+
-                    '\nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+
-                    '\nBody: '+this.responseText);
-                $('.a').html(this.responseText);
-            }
+    // var xhr = new XMLHttpRequest();
+    // var url = 'http://openapi.seoul.go.kr:8088/786e44785864656334354e61496a76/json/TbAdpWaitAnimalView/1/27/20220301'; /* URL */
+    // xhr.open('GET', url);
+    // xhr.onreadystatechange = function () {
+    //     if (this.readyState == xhr.DONE) {  // <== 정상적으로 준비되었을때
+    //         if(xhr.status == 200||xhr.status == 201){ // <== 호출 상태가 정상적일때
+    //             alert('Status: '+this.status+
+    //                 '\nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+
+    //                 '\nBody: '+this.responseText);
+    //             $('.a').html(this.responseText);
+    //         }
+    //     }
+    // };
+    // xhr.send('');
+    $.ajax({
+        url : 'http://openapi.seoul.go.kr:8088/786e44785864656334354e61496a76/json/TbAdpWaitAnimalView/1/27/',
+        type : 'get',
+        dataType : 'json',
+        success : function (result){
+            console.log(result)
+            console.log(result.TbAdpWaitAnimalView.row);
+
+            let list = result.TbAdpWaitAnimalView.row;
+            list.forEach(obj => makeList(obj));
+
+
+
         }
-    };
-    xhr.send('');
+    });
+
+    function makeList(obj){
+        let card = `
+            <div>
+                <div>${obj.NM}</div>
+                <img src="https://animal.seoul.go.kr/comm/getImage?srvcId=MEDIA&upperNo=${obj.ANIMAL_NO}&fileTy=ADOPTIMG&fileNo=1&thumb"/>
+            </div>
+        `;
+
+        $('body').append(card);
+    }
+
+
 </script>
 </body>
 </html>

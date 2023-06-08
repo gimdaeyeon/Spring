@@ -68,10 +68,6 @@ function apiTest(){
          console.log(result.TbAdpWaitAnimalView.row[0]);
          console.log(result.TbAdpWaitAnimalView.row[0].ANIMAL_NO);
          let aniNumber = result.TbAdpWaitAnimalView.row[0].ANIMAL_NO;
-
-
-
-
       },
       error : function (a,b,c,){
          console.log(c);

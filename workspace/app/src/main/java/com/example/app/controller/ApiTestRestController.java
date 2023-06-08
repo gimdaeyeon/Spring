@@ -1,7 +1,10 @@
 package com.example.app.controller;
 
+import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,7 @@ import java.net.URLEncoder;
 
 @RestController
 @RequestMapping("/test/*")
+@Slf4j
 public class ApiTestRestController {
     @GetMapping("/seoul")
     public String apiTest() throws IOException {
@@ -52,31 +56,25 @@ public class ApiTestRestController {
         rd.close();
         conn.disconnect();
 //        System.out.println(sb.toString().TbAdpWaitAnimalView.row[0]);
-        System.out.println(sb.toString());
+        String apiResult = sb.toString();
+//        log.info(sb.toString());
 
-//        sb.toString().
-//        JSONParser parser = new JSONParser();
-//
+        JSONParser parser = new JSONParser();
 //        // JSON 파일 읽기
-//        Reader reader = new FileReader("C:\\code\\test.json");
-//        JSONObject jsonObject = (JSONObject) parser.parse(reader);
-//
-//        String name = (String) jsonObject.get("name");
-//        long id = (Long) jsonObject.get("id");
-//        long price = (Long) jsonObject.get("price");
-//
-//        System.out.println(name);  // apple
-//        System.out.println(id);  // 1
-//        System.out.println(price);  // 1000
+        try {
+            JSONObject jsonObject = (JSONObject) parser.parse(apiResult);
+            JSONObject object = (JSONObject) jsonObject.get("TbAdpWaitAnimalView");
+            JSONArray jsonArray = (JSONArray) object.get("row");
+            System.out.println(jsonArray.size());
+            System.out.println(jsonArray.get(0).toString());
 
 
+//            String animalName = (String)jsonObject.get("TbAdpWaitAnimalView.row[0].NM");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-
-
-
-
-
-        return sb.toString();
+        return apiResult;
     }
 
 
