@@ -38,6 +38,7 @@ $('#chatbot-input').on('keypress', function (e) {
    }
 });
 
+
 // 유저 메세지 추가
 function addUserMessage(message) {
    let htmlCode = `<div class="user-message message">
