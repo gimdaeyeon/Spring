@@ -18,6 +18,7 @@ public class CustomError implements ErrorController {
         Object attribute =req.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         if(attribute!=null){
             int statusCode = Integer.valueOf(attribute.toString());
+            System.out.println(statusCode);
             if(statusCode== HttpStatus.NOT_FOUND.value()){
                 return "error/404"; //404에러 : 요청 페이지를 찾을 수 없음
             }
