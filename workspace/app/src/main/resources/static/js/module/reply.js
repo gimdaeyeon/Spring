@@ -31,7 +31,7 @@ export function getList(boardNumber, callback, error){
         error : error
     });
 }
-
+// 댓글 리스트 가져오기(페이징)
 export function getListPage(pageInfo, callback, error){
     $.ajax({
         url : `/replies/list/${pageInfo.boardNumber}/${pageInfo.page}`,

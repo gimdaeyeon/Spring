@@ -66,6 +66,7 @@ public class ReplyService {
         return replyMapper.selectListPage(criteria, boardNumber);
     }
 
+//    해당 게시물의 전체 댓글 수
     public int findTotal(Long boardNumber){
         if (boardNumber == null) {
             throw new IllegalArgumentException("게시물 번호 누락");

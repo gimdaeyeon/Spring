@@ -109,7 +109,8 @@ $('.btn-reply').on('click', function(){
 
     reply.add(replyObj,
         function() {
-            reply.getListPage({boardNumber : boardNumber, page : page}, showReply, showError);
+            reply.getListPage({boardNumber : boardNumber, page : page},
+                showReply, showError);
         }
         ,showError);
 
