@@ -23,8 +23,7 @@ public class UserService {
     /**
      * 회원 번호 조회하기(아이디, 패스워드)
      * @param userId
-     * @param userPassword
-     * @return userNumber
+     * @param userPassword     * @return userNumber
      * @throws IllegalArgumentException 존재하지 않는 회원 id, pw로 조회하는 경우
      */
     @Transactional(readOnly = true)
