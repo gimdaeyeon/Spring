@@ -141,7 +141,7 @@ $('.btn-remove').on('click', function(){
     let boardNumber = $('.board-num').val();
     window.location.href = '/board/remove?boardNumber=' + boardNumber;
 
-//    참고 : post로 요청보내기
+// //    참고 : post로 요청보내기
 //     let obj = document.createElement('input');
 //     obj.setAttribute('type', 'hidden');
 //     obj.setAttribute('name', 'boardNumber');
