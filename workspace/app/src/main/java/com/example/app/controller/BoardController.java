@@ -22,6 +22,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -35,9 +36,9 @@ public class BoardController {
     @LoggingPointcut
     @GetMapping("/list")
     public String showBoardList(Criteria criteria, Model model){
-        List<BoardVo> boardList = boardService.findAll(criteria);
+        List<BoardVo> boardList = new ArrayList<>();
         model.addAttribute("boardList", boardList);
-        model.addAttribute("pageInfo", new PageVo(criteria, boardService.getTotal()));
+        model.addAttribute("pageInfo", new PageVo(criteria,10));
 
         return "board/board";
     }
