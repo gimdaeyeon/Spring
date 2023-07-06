@@ -25,8 +25,8 @@ public class OpenAiController {
     @PostMapping("/question")
     public Mono<Map> question(@RequestBody Map<String, String> body){
         String content = body.get("content");
-
         Map<String, Object> setting = new HashMap<>();
+
         setting.put("role", "system");
         setting.put("content", "너는 우리 사이트의 고객센터 직원이야, 우리 웹사이트에 대해 뭐든 답변해줄 수 있어" +
                 "답변할 수 없는 내용은 회사 전화번호로 연락하라고 알려줘야 해" +
@@ -57,6 +57,7 @@ public class OpenAiController {
                 .retrieve() //위에서 만든 요청을 보낸다.
                 .bodyToMono(Map.class); //응답의 body를 받는다. Mono<Map>으로 받는다.
 
+        
         return resultBody;
     }
 }
