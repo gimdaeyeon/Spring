@@ -57,7 +57,7 @@ public class OpenAiController {
                 .retrieve() //위에서 만든 요청을 보낸다.
                 .bodyToMono(Map.class); //응답의 body를 받는다. Mono<Map>으로 받는다.
 
-        
+
         return resultBody;
     }
 }
