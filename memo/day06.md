@@ -139,6 +139,7 @@ Optional타입은 null 체크를 보다 간결하고 안전하게 코드를 작�
     String name = Optional.ofNullable(std).orElseGet(Student::new).getName();
 ```
 
+
     
 4. `orElseThrow()`
     
