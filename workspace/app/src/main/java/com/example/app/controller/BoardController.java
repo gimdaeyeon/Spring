@@ -33,10 +33,9 @@ public class BoardController {
     private final FileService fileService;
 
 
-    @LoggingPointcut
     @GetMapping("/list")
     public String showBoardList(Criteria criteria, Model model){
-        List<BoardVo> boardList = new ArrayList<>();
+        List<BoardVo> boardList = boardService.findAll(criteria);
         model.addAttribute("boardList", boardList);
         model.addAttribute("pageInfo", new PageVo(criteria,10));
 

@@ -58,23 +58,23 @@ function addBotMessage(message) {
    $('.chatbot-body')[0].scrollTop = $('.chatbot-body')[0].scrollHeight;// 스크롤 하단으로 이동
 }
 
-apiTest();
-function apiTest(){
-   $.ajax({
-      url : `/test/seoul`,
-      type : 'get',
-      dataType : 'json',
-      success : function (result){
-         console.log(result);
-         console.log(result.TbAdpWaitAnimalView.row[0]);
-         console.log(result.TbAdpWaitAnimalView.row[0].ANIMAL_NO);
-         let aniNumber = result.TbAdpWaitAnimalView.row[0].ANIMAL_NO;
-      },
-      error : function (a,b,c,){
-         console.log(c);
-      }
-   });
-}
+// apiTest();
+// function apiTest(){
+//    $.ajax({
+//       url : `/test/seoul`,
+//       type : 'get',
+//       dataType : 'json',
+//       success : function (result){
+//          console.log(result);
+//          console.log(result.TbAdpWaitAnimalView.row[0]);
+//          console.log(result.TbAdpWaitAnimalView.row[0].ANIMAL_NO);
+//          let aniNumber = result.TbAdpWaitAnimalView.row[0].ANIMAL_NO;
+//       },
+//       error : function (a,b,c,){
+//          console.log(c);
+//       }
+//    });
+// }
 
 
 

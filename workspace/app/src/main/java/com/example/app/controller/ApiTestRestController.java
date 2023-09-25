@@ -65,6 +65,8 @@ public class ApiTestRestController {
             JSONObject jsonObject = (JSONObject) parser.parse(apiResult);
             JSONObject object = (JSONObject) jsonObject.get("TbAdpWaitAnimalView");
             JSONArray jsonArray = (JSONArray) object.get("row");
+
+            System.out.println("================");
             System.out.println(jsonArray.get(0).toString());
 
 
