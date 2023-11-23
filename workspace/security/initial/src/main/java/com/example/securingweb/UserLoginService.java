@@ -1,17 +1,20 @@
 package com.example.securingweb;
 
 import com.example.securingweb.dto.MemberDetails;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserLoginService implements UserDetailsService {
 
-    
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -22,7 +25,8 @@ public class UserLoginService implements UserDetailsService {
 
         if (username.equals("aaa")) {
 //            BCrypt로 비밀번호 암호화
-            String password = BCrypt.hashpw("1234", BCrypt.gensalt(10));
+
+            String password = bCryptPasswordEncoder.encode("aaa");
 
             UserDto userDto = new UserDto();
             userDto.setId(1L);
