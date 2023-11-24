@@ -22,6 +22,11 @@ public class MvcController {
         return "hello";
     }
 
+    @GetMapping("/join")
+    public String join(){
+        return "join";
+    }
+
 
 
 

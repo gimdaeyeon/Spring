@@ -1,18 +1,17 @@
-package com.example.securingweb;
+package com.example.securingweb.service;
 
 import com.example.securingweb.dto.MemberDetails;
+import com.example.securingweb.dto.UserDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserLoginService implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
