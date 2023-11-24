@@ -27,7 +27,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
-
+	testAnnotationProcessor 'org.projectlombok:lombok'
 	// lombok
 	implementation 'org.projectlombok:lombok:1.18.18'
 	annotationProcessor 'org.projectlombok:lombok'

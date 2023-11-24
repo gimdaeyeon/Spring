@@ -18,8 +18,6 @@ class TimeMapperTest {
     @DisplayName("연결테스트")
     public void getTimeTest() {
         log.info("***** time : " + timeMapper.getTime());
-
-
     }
 
     @Test

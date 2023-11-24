@@ -7,7 +7,7 @@
             SELECT SEQ_USER.NEXTVAL FROM DUAL
         </selectKey>
         insert into TBL_USER (ID, LOGIN_ID, PASSWORD, NAME, AGE)
-        values (#{id},#{loginId},#{password},#{name},#{age});
+        values (#{id},#{loginId},#{password},#{name},#{age})
     </insert>
 
     <select id="selectById" resultType="userDto">
