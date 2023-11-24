@@ -1,46 +1,31 @@
 package com.example.securingweb.service;
 
-import com.example.securingweb.dto.MemberDetails;
 import com.example.securingweb.dto.UserDto;
+import com.example.securingweb.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+public class UserService {
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("ㅋㅋㅋㅋㅋㅋㅋㅋㅋ");
-        System.out.println(username);
-
-        MemberDetails user = null;
-
-        if (username.equals("aaa")) {
-//            BCrypt로 비밀번호 암호화
-
-            String password = bCryptPasswordEncoder.encode("aaa");
-
-            UserDto userDto = new UserDto();
-            userDto.setId(1L);
-            userDto.setLoginId("aaa");
-            userDto.setPassword(password);
-            userDto.setAge(15);
-            userDto.setName("홍길동");
-            user = new MemberDetails(userDto);
-            System.out.println(userDto);
+    public void register(UserDto userDto){
+        if(userDto == null){
+            throw new IllegalArgumentException("회원정보 누락");
         }
-
-        if (user == null) {
-            System.out.println("인증 미완료");
-            throw new UsernameNotFoundException("일치하는 회원이 아닙니다.");
-        }
-        return user;
+        passwordEncryption(userDto);
+        userMapper.insert(userDto);
     }
+
+    private void passwordEncryption(UserDto userDto){
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+    }
+
+
 }

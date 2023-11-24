@@ -1,10 +1,12 @@
 package com.example.securingweb.config;
 
+import com.example.securingweb.security.CustomLoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -12,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     @Bean
-    public static BCryptPasswordEncoder bCryptPasswordEncoder() {
+    public static PasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -29,9 +31,14 @@ public class WebSecurityConfig {
 //                        로그인 페이지의 url설정
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/hello")
+                                .defaultSuccessUrl("/")
+                                .successHandler(new CustomLoginSuccessHandler("/"))
                 )
-                .logout((logout) -> logout.permitAll());
+                .logout((logout) -> logout
+                                .logoutUrl("/logout")
+                                .logoutSuccessUrl("/")
+                                .invalidateHttpSession(true)
+                );
 
         return http.build();
     }

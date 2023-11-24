@@ -1,11 +1,20 @@
 package com.example.securingweb.controller;
 
+import com.example.securingweb.dto.UserDto;
+import com.example.securingweb.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
+@RequiredArgsConstructor
 public class MvcController {
+
+    private final UserService userService;
+
 
     @RequestMapping({"/","/home"})
     public String goHome(){
@@ -25,6 +34,11 @@ public class MvcController {
     @GetMapping("/join")
     public String join(){
         return "join";
+    }
+    @PostMapping("/join")
+    public RedirectView joinOk(UserDto userDto){
+        userService.register(userDto);
+        return new RedirectView("/login");
     }
 
 

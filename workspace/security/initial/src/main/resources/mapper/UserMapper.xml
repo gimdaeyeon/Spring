@@ -16,5 +16,11 @@
         WHERE ID = #{id}
     </select>
 
+    <select id="selectByLoginId" resultType="userDto">
+        SELECT ID,LOGIN_ID,PASSWORD,NAME,AGE
+        FROM TBL_USER
+        WHERE LOGIN_ID = #{loginId}
+    </select>
+
 
 </mapper>

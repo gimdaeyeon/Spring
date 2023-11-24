@@ -50,4 +50,12 @@ public class MemberDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public Long getId(){
+        return userDto.getId();
+    }
+
+    public String getRealName(){
+        return userDto.getName();
+    }
 }
