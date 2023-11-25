@@ -1,6 +1,6 @@
 package com.example.securingweb.mapper;
 
-import com.example.securingweb.dto.UserDto;
+import com.example.securingweb.domain.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

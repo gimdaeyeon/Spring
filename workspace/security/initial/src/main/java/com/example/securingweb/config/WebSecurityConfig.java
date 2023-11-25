@@ -1,6 +1,7 @@
 package com.example.securingweb.config;
 
 import com.example.securingweb.security.CustomLoginSuccessHandler;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,7 +26,10 @@ public class WebSecurityConfig {
 //                        해당  url로 들어온 요청은 인증을 해야한다
                                 .requestMatchers("/hello").authenticated()
 //                        그 밖의 요청은 허용한다.
+                                .requestMatchers("/admin")
+                                .hasAnyRole("MEMBER", "ADMIN")
                                 .anyRequest().permitAll()
+
                 )
                 .formLogin((form) -> form
 //                        로그인 페이지의 url설정
@@ -34,10 +38,14 @@ public class WebSecurityConfig {
                                 .defaultSuccessUrl("/")
                                 .successHandler(new CustomLoginSuccessHandler("/"))
                 )
+
                 .logout((logout) -> logout
                                 .logoutUrl("/logout")
                                 .logoutSuccessUrl("/")
                                 .invalidateHttpSession(true)
+                )
+                .exceptionHandling(exceptionHandling->
+                        exceptionHandling.accessDeniedPage("/")
                 );
 
         return http.build();

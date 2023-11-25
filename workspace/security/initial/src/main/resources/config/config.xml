@@ -3,7 +3,8 @@
 
 <configuration>
     <typeAliases>
-        <typeAlias type="com.example.securingweb.dto.UserDto" alias="userDto"/>
+        <typeAlias type="com.example.securingweb.domain.UserDto" alias="userDto"/>
+        <typeAlias type="com.example.securingweb.domain.AuthorityDto" alias="authorityDto"/>
     </typeAliases>
 
 </configuration>

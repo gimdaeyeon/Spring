@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.securingweb.mapper.AuthorityMapper">
+
+    <insert id="insert">
+        <selectKey keyProperty="id" order="BEFORE" resultType="Long">
+            SELECT SEQ_AUTHORITY.NEXTVAL FROM DUAL
+        </selectKey>
+        insert into TBL_AUTHORITY (ID,USER_ID,AUTHORITY_NAME)
+        values (#{id}, #{userId},#{authorityName})
+    </insert>
+
+    <select id="selectByUserId" resultType="authorityDto">
+        SELECT ID, AUTHORITY_NAME, USER_ID
+        FROM TBL_AUTHORITY
+        WHERE USER_ID = #{userId}
+    </select>
+
+</mapper>

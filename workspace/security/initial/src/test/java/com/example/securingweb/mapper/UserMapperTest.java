@@ -1,8 +1,7 @@
 package com.example.securingweb.mapper;
 
-import com.example.securingweb.dto.UserDto;
+import com.example.securingweb.domain.UserDto;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

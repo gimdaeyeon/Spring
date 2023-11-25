@@ -1,20 +1,49 @@
-package com.example.securingweb.dto;
+package com.example.securingweb.domain;
 
+import com.example.securingweb.domain.type.Authority;
+import com.example.securingweb.service.UserService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class MemberDetails implements UserDetails {
     private final UserDto userDto;
+    private UserService userService;
 
     public MemberDetails(UserDto userDto) {
         this.userDto = userDto;
     }
 
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+
+        Collection<GrantedAuthority> collect = new ArrayList<>();
+
+        List<AuthorityDto> list = userService.findAuthorityById(userDto.getId());
+
+        for(AuthorityDto auth : list){
+            collect.add(new GrantedAuthority() {
+                @Override
+                public String getAuthority() {
+                    return auth.getAuthorityName();
+                }
+
+                // thymeleaf 등에서 확인 활용하기 위하 문자열 (학습목적)
+                @Override
+                public String toString() {
+                    return auth.getAuthorityName();
+                }
+            });
+        }
+
+        return collect;
     }
 
     @Override

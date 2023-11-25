@@ -1,6 +1,6 @@
 package com.example.securingweb.controller;
 
-import com.example.securingweb.dto.UserDto;
+import com.example.securingweb.domain.UserDto;
 import com.example.securingweb.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -41,6 +41,10 @@ public class MvcController {
         return new RedirectView("/login");
     }
 
+    @GetMapping("/admin")
+    public String goAdmin(){
+        return "admin";
+    }
 
 
 
