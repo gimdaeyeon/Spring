@@ -1,6 +1,5 @@
 package com.example.securingweb.domain;
 
-import com.example.securingweb.domain.type.Authority;
 import com.example.securingweb.service.UserService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

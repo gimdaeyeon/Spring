@@ -65,9 +65,14 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
+    /**
+     * https://github.com/jwtk/jjwt
+     */
+
     // 토큰에서 회원 정보 추출
     public String getUserPk(String token) {
-        JwtParserBuilder jwtParserBuilder = Jwts.parser().verifyWith();
+        SecretKey key = Jwts.SIG.HS256.key().build();
+        JwtParserBuilder jwtParserBuilder = Jwts.parser().verifyWith(key);
         return null;
 //        return Jwts.parser().setSigningKey(secretKey)
 //                .parseClaimsJws(token).getBody().getSubject();
