@@ -12,7 +12,6 @@ import java.sql.SQLException;
 
 @Component
 public class P6SpyFormatter extends JdbcEventListener implements MessageFormattingStrategy {
-
     @Override
     public void onAfterGetConnection(ConnectionInformation connectionInformation, SQLException e) {
         P6SpyOptions.getActiveInstance().setLogMessageFormat(getClass().getName());

@@ -2,6 +2,8 @@ package com.example.securingweb.controller;
 
 import com.example.securingweb.domain.UserDto;
 import com.example.securingweb.service.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +29,9 @@ public class MvcController {
     }
 
     @GetMapping("/hello")
-    public String goHelloPage(){
+    public String goHelloPage(HttpServletRequest req){
+        req.getHeader()
+
         return "hello";
     }
 

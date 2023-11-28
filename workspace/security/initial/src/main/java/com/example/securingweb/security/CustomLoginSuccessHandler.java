@@ -21,6 +21,10 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
 //        스프링시큐리티가 세션에 담아준 정보들을 가져오는 방법
 //        MemberDetails memberDetails = (MemberDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Cookie cookie = new Cookie("test","hello");
+        cookie.setMaxAge(60);
+        response.addCookie(cookie);
+
         super.onAuthenticationSuccess(request, response, authentication);
     }
 
