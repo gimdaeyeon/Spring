@@ -13,14 +13,9 @@ import java.util.List;
 
 public class PrincipalDetails  implements UserDetails {
     private final User user;
-    private UserService userService;
 
     public PrincipalDetails(User user) {
         this.user = user;
-    }
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
     }
 
     @Override
@@ -28,9 +23,9 @@ public class PrincipalDetails  implements UserDetails {
 
         Collection<GrantedAuthority> collect = new ArrayList<>();
 
-        List<UserAuthority> authority = user.getAuthority();
+        List<UserAuthority> authorities = user.getAuthorities();
 
-        for(UserAuthority auth : authority){
+        for(UserAuthority auth : authorities){
             collect.add(new GrantedAuthority() {
                 @Override
                 public String getAuthority() {

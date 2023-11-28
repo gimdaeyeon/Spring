@@ -25,5 +25,5 @@ public class User {
     private Integer age;
 
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
-    List<UserAuthority> authority = new ArrayList<>();
+    List<UserAuthority> authorities = new ArrayList<>();
 }

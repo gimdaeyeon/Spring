@@ -1,5 +1,6 @@
 package com.security.jwt.security;
 
+import com.security.jwt.security.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -31,9 +32,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-
+//                세션리스 설정
                 .sessionManagement(sessionManagement-> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
 
                 .authorizeHttpRequests((requests) -> requests
 //                        해당  url로 들어온 요청은 인증을 해야한다
@@ -44,19 +46,15 @@ public class SecurityConfig {
                                 .anyRequest().permitAll()
 
                 )
-                .formLogin((form) -> form
-//                        로그인 페이지의 url설정
-                                .loginPage("/user/login")
-                                .loginProcessingUrl("/user/login")
-                                .defaultSuccessUrl("/")
-//                                .successHandler(new CustomLoginSuccessHandler("/"))
-                )
-
-                .logout((logout) -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/")
-                        .invalidateHttpSession(true)
-                )
+//                jwt는 sessionLess방식이기 때문에 스프링 시큐맅티에서 기본적으로 제공하는
+//                formLogin과 logout을 따로 설정해줄 필요 없다.
+//                .formLogin((form) -> form
+////                        로그인 페이지의 url설정
+//                                .loginPage("/user/login")
+//                                .loginProcessingUrl("/user/login")
+//                                .defaultSuccessUrl("/")
+////                                .successHandler(new CustomLoginSuccessHandler("/"))
+//                )
                 .exceptionHandling(exceptionHandling->
                         exceptionHandling.accessDeniedPage("/")
                 );
