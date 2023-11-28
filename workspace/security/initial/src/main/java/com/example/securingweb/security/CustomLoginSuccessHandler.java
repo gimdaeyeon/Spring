@@ -23,6 +23,7 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 //        MemberDetails memberDetails = (MemberDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Cookie cookie = new Cookie("test","hello");
         cookie.setMaxAge(60);
+        cookie.setPath("/");
         response.addCookie(cookie);
 
         super.onAuthenticationSuccess(request, response, authentication);

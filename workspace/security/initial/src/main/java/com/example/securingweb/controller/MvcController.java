@@ -30,8 +30,7 @@ public class MvcController {
 
     @GetMapping("/hello")
     public String goHelloPage(HttpServletRequest req){
-        req.getHeader()
-
+        System.out.println(req.getHeader("Cookie"));
         return "hello";
     }
 
