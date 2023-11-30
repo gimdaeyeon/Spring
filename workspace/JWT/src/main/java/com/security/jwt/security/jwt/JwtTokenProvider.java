@@ -16,26 +16,24 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import java.util.Base64;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
 @RequiredArgsConstructor
 @Component
 public class JwtTokenProvider {
-    @Value("${jwt.secret}")
-    private  String secretKey;
-    private SecretKey key;
+    private final SecretKey key;
 
     // 토큰 유효시간 30분
     private final long tokenValidTime = 30 * 60 * 1000L;
 
     // 객체 초기화, secretKey를 Base64로 인코딩한다.
-    @PostConstruct
-    protected void init() {
-        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
-        key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
-    }
+//    @PostConstruct
+//    protected void init() {
+//        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+//        key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
+//    }
 
     // JWT 토큰 생성
     public String createToken(String userPk, Collection<? extends GrantedAuthority> authorities) {
@@ -44,7 +42,7 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .claims()// 정보 저장
                     .subject(userPk)// JWT payload 에 저장되는 정보단위, 보통 여기서 user를 식별하는 값을 넣는다.
-                    .add("authority", authorities.stream().map(GrantedAuthority::getAuthority).toList())// 정보는 key / value 쌍으로 저장된다.
+                    .add("authorities", authorities.stream().map(GrantedAuthority::getAuthority).toList())// 정보는 key / value 쌍으로 저장된다.
                     .issuedAt(now)// 토큰 발행 시간 정보
                     .expiration(new Date(now.getTime() + tokenValidTime))// 토큰 유효 시간
                 .and()  //return back to the JwtBuilder
@@ -59,8 +57,11 @@ public class JwtTokenProvider {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
+        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)payload.get("authorities");
 
-        return new UsernamePasswordAuthenticationToken(payload.getSubject(), "", null);
+        System.out.println("authorities = " + authorities);
+
+        return new UsernamePasswordAuthenticationToken(payload.getSubject(), "", authorities);
     }
 
     /**

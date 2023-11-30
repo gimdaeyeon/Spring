@@ -5,6 +5,8 @@ import com.example.securingweb.domain.UserDto;
 import com.example.securingweb.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.Collection;
 
 
 @Controller
@@ -42,7 +46,9 @@ public class MvcController {
 //        req.getSession().removeAttribute("SPRING_SECURITY_CONTEXT");
 
         MemberDetails memberDetails2 = (MemberDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
+        Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("authentication = " + authentication);
 
         return "hello";
     }

@@ -2,7 +2,10 @@ package com.security.jwt.security;
 
 import com.security.jwt.security.jwt.JwtAuthenticationFilter;
 import com.security.jwt.security.jwt.JwtTokenProvider;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,9 +18,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.crypto.SecretKey;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    @Value("${jwt.secret}")
+    private  String secretKey;
 
 //    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 //    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
@@ -26,7 +33,11 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+    @Bean
+    public SecretKey createSecretKey(){
+        SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
+        return key;
+    }
 
 
     @Bean
@@ -36,12 +47,6 @@ public class SecurityConfig {
 //                세션리스 설정
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                내가 만든 JwtAuthenticationFilter를
-//                UsernamePasswordAuthenticationFilter앞에 실행시키겠다
-                .addFilterBefore(new JwtAuthenticationFilter(new JwtTokenProvider()),
-                        UsernamePasswordAuthenticationFilter.class)
-
-
                 .authorizeHttpRequests((requests) -> requests
 //                        해당  url로 들어온 요청은 인증을 해야한다
                                 .requestMatchers("/main/hello").authenticated()
@@ -50,6 +55,10 @@ public class SecurityConfig {
                                 .hasAnyAuthority("USER", "ADMIN")
                                 .anyRequest().permitAll()
                 )
+//                내가 만든 JwtAuthenticationFilter를
+//                UsernamePasswordAuthenticationFilter앞에 실행시키겠다
+                .addFilterBefore(new JwtAuthenticationFilter(new JwtTokenProvider(createSecretKey())),
+                        UsernamePasswordAuthenticationFilter.class)
 //                jwt는 sessionLess방식이기 때문에 스프링 시큐맅티에서 기본적으로 제공하는
 //                formLogin과 logout을 따로 설정해줄 필요 없다.
 //                .formLogin((form) -> form
