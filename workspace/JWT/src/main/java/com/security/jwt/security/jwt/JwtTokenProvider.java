@@ -3,22 +3,20 @@ package com.security.jwt.security.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
-import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -57,9 +55,15 @@ public class JwtTokenProvider {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)payload.get("authorities");
 
-        System.out.println("authorities = " + authorities);
+        String rawAuthorities = payload.get("authorities").toString();
+        rawAuthorities = rawAuthorities.substring(1, rawAuthorities.length() - 1); // 괄호 제거
+
+        Collection<? extends GrantedAuthority> authorities =
+                Arrays.stream(rawAuthorities.split(","))
+                        .map(String::trim)
+                        .map(SimpleGrantedAuthority::new)
+                        .toList();
 
         return new UsernamePasswordAuthenticationToken(payload.getSubject(), "", authorities);
     }

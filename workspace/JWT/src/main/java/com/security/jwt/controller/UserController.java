@@ -41,6 +41,8 @@ public class UserController {
         }
         Cookie cookie = new Cookie("accessToken",accessToken);
         cookie.setPath("/");
+//        cookie.setHttpOnly(true);
+
         resp.addCookie(cookie);
 
 

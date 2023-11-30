@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,24 +21,10 @@ public class MainController {
         return "main/home";
     }
     @GetMapping("/main/hello")
-    public String hello(HttpServletRequest request){
+    public String hello(HttpServletRequest req){
 
-        String token = null;
+        System.out.println(req.getHeader("Cookie"));
 
-        for(Cookie cookie:request.getCookies()){
-            if(cookie.getName().equals("accessToken")){
-                token = cookie.getValue();
-                break;
-            }
-        }
-        Object authority = Jwts.parser().verifyWith(secretKey)
-                .clockSkewSeconds(60L)
-                .build()
-                .parseSignedClaims(token)
-                .getPayload()
-                .get("authorities");
-
-        System.out.println("authority = " + authority);
         return "main/hello";
     }
     @GetMapping("/admin/admin")
