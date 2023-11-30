@@ -9,10 +9,10 @@ spring:
     password: 1234
   jpa:
     hibernate:
-                  ddl-auto: create
+#                  ddl-auto: create
       #            ddl-auto: create-drop
       #            ddl-auto: update
-#      ddl-auto: validate
+      ddl-auto: validate
   security:
     user:
       name: aaa

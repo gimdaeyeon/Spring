@@ -2,7 +2,11 @@ package com.security.jwt.controller;
 
 import com.security.jwt.domain.entity.User;
 import com.security.jwt.service.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,5 +30,22 @@ public class UserController {
         userService.register(user);
         return new RedirectView("/");
     }
+    @PostMapping("/login")
+    public RedirectView login(User user, HttpServletResponse resp){
+        String accessToken = null;
+        try {
+            accessToken = userService.authenticateAndGetJwt(user.getLoginId(),user.getPassword());
+        } catch (UsernameNotFoundException e) {
+//            e.printStackTrace();
+            return new RedirectView("/user/login?fail");
+        }
+        Cookie cookie = new Cookie("accessToken",accessToken);
+        cookie.setPath("/");
+        resp.addCookie(cookie);
+
+
+        return new RedirectView("/");
+    }
+
 
 }

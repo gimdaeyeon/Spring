@@ -1,6 +1,7 @@
 package com.security.jwt.security;
 
 import com.security.jwt.security.jwt.JwtAuthenticationFilter;
+import com.security.jwt.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -12,29 +13,33 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
 
-//    private final TokenProvider tokenProvider;
 //    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 //    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-
     // PasswordEncoder는 BCryptPasswordEncoder를 사용
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
 //                세션리스 설정
-                .sessionManagement(sessionManagement-> sessionManagement
+                .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                내가 만든 JwtAuthenticationFilter를
+//                UsernamePasswordAuthenticationFilter앞에 실행시키겠다
+                .addFilterBefore(new JwtAuthenticationFilter(new JwtTokenProvider()),
+                        UsernamePasswordAuthenticationFilter.class)
 
 
                 .authorizeHttpRequests((requests) -> requests
@@ -42,9 +47,8 @@ public class SecurityConfig {
                                 .requestMatchers("/main/hello").authenticated()
 //                        그 밖의 요청은 허용한다.
                                 .requestMatchers("/admin/admin")
-                                .hasAnyRole("USER", "ADMIN")
+                                .hasAnyAuthority("USER", "ADMIN")
                                 .anyRequest().permitAll()
-
                 )
 //                jwt는 sessionLess방식이기 때문에 스프링 시큐맅티에서 기본적으로 제공하는
 //                formLogin과 logout을 따로 설정해줄 필요 없다.
@@ -55,9 +59,9 @@ public class SecurityConfig {
 //                                .defaultSuccessUrl("/")
 ////                                .successHandler(new CustomLoginSuccessHandler("/"))
 //                )
-                .exceptionHandling(exceptionHandling->
-                        exceptionHandling.accessDeniedPage("/")
-                );
+                .exceptionHandling(exceptionHandling->{
+                    exceptionHandling.accessDeniedPage("/");
+                });
 
 
         return httpSecurity.build();
