@@ -20,6 +20,7 @@ public class MemberDetails implements UserDetails {
         this.userService = userService;
     }
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 

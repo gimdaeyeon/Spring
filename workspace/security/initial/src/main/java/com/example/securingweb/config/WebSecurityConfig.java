@@ -1,7 +1,6 @@
 package com.example.securingweb.config;
 
 import com.example.securingweb.security.CustomLoginSuccessHandler;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,9 +24,15 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
 //                        해당  url로 들어온 요청은 인증을 해야한다
                                 .requestMatchers("/hello").authenticated()
-//                        그 밖의 요청은 허용한다.
+//                        해당  url로 들어온 요청은 인증과 권한확인을 해야한다
                                 .requestMatchers("/admin")
-                                .hasAnyRole("MEMBER", "ADMIN")
+//                                .hasAnyRole("USER", "ADMIN")
+//                                Role로 회원의 권한을 검사할 경우 db에 ROLE_접두어를 붙여 저장한다.( ex. ROLE_USER, ROLE_ADMIN )
+
+                                .hasAnyAuthority("USER", "ADMIN")
+
+                                // hasAnyAuthority()메소드로 검사하는 경우 해당 문자열 그대로 검사한다.
+//                        그 밖의 요청은 허용한다.
                                 .anyRequest().permitAll()
 
                 )
@@ -51,15 +56,5 @@ public class WebSecurityConfig {
         return http.build();
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.withDefaultPasswordEncoder()
-//                        .username("aaa")
-//                        .password("1234")
-//                        .roles("USER")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
+
 }

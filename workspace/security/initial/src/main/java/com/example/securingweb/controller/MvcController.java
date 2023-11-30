@@ -1,15 +1,18 @@
 package com.example.securingweb.controller;
 
+import com.example.securingweb.domain.MemberDetails;
 import com.example.securingweb.domain.UserDto;
 import com.example.securingweb.service.UserService;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -30,7 +33,17 @@ public class MvcController {
 
     @GetMapping("/hello")
     public String goHelloPage(HttpServletRequest req){
-        System.out.println(req.getHeader("Cookie"));
+
+        MemberDetails memberDetails = (MemberDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        SecurityContext securityContext = (SecurityContext)req.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
+        securityContext.getAuthentication().getAuthorities();
+
+//        req.getSession().removeAttribute("SPRING_SECURITY_CONTEXT");
+
+        MemberDetails memberDetails2 = (MemberDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+
         return "hello";
     }
 

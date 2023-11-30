@@ -43,8 +43,8 @@ public class JwtTokenProvider {
         Date now = new Date();
         return Jwts.builder()
                 .claims()// 정보 저장
-                .issuedAt(now)// 토큰 발행 시간 정보
-                .expiration(new Date(now.getTime() + tokenValidTime))// 토큰 유효 시간
+                    .issuedAt(now)// 토큰 발행 시간 정보
+                    .expiration(new Date(now.getTime() + tokenValidTime))// 토큰 유효 시간
                 .and()  //return back to the JwtBuilder
                 .signWith(key)  // 사용할 암호화 알고리즘과 signature 에 들어갈 secret값 세팅
                 .compact();

@@ -2,9 +2,9 @@ package com.example.securingweb.security;
 
 import com.example.securingweb.domain.MemberDetails;
 import com.example.securingweb.domain.UserDto;
-import com.example.securingweb.mapper.UserMapper;
 import com.example.securingweb.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,6 +25,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
         MemberDetails memberDetails = new MemberDetails(userDto);
         memberDetails.setUserService(userService);
+
         return memberDetails;
+//        return new User(username,userDto.getPassword(),memberDetails.getAuthorities());
     }
 }

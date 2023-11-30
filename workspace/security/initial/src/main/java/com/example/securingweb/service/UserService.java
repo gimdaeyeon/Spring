@@ -54,7 +54,7 @@ public class UserService {
     private void registerDefaultUserAuthority(UserDto userDto){
         AuthorityDto authorityDto = new AuthorityDto();
         authorityDto.setUserId(userDto.getId());
-        authorityDto.setAuthorityName(Authority.ROLE_USER.getName());
+        authorityDto.setAuthorityName(Authority.USER.name());
         authorityMapper.insert(authorityDto);
     }
 

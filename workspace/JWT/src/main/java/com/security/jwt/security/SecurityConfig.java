@@ -42,7 +42,7 @@ public class SecurityConfig {
                                 .requestMatchers("/main/hello").authenticated()
 //                        그 밖의 요청은 허용한다.
                                 .requestMatchers("/admin/admin")
-                                .hasAnyRole("MEMBER", "ADMIN")
+                                .hasAnyRole("USER", "ADMIN")
                                 .anyRequest().permitAll()
 
                 )
