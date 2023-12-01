@@ -51,7 +51,7 @@ public class JwtTokenProvider {
     // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token) {
         Claims payload = Jwts.parser().verifyWith(key)
-                .clockSkewSeconds(60)   //1분
+                .clockSkewSeconds(60)   //오차 허용시간 1분
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
@@ -82,8 +82,7 @@ public class JwtTokenProvider {
                 .getPayload().getSubject();
     }
 
-    // Request의 Header에서 token 값을 가져옵니다. "Authorization" : "TOKEN값'
-    public String resolveToken(HttpServletRequest request) {
+    public String getTokenByRequest(HttpServletRequest request) {
         String token = null;
         for(Cookie cookie:request.getCookies()){
             if(cookie.getName().equals("accessToken")){
@@ -98,8 +97,9 @@ public class JwtTokenProvider {
     public boolean validateToken(String jwtToken) {
         try {
             Jws<Claims> claims = Jwts.parser().verifyWith(key)
-                    .clockSkewSeconds(60)
+                    .clockSkewSeconds(60L)
                     .build().parseSignedClaims(jwtToken);
+
             return !claims.getPayload().getExpiration()
                     .before(new Date());
 

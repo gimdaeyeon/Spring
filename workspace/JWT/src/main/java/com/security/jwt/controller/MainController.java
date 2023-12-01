@@ -1,5 +1,6 @@
 package com.security.jwt.controller;
 
+import com.security.jwt.security.jwt.JwtTokenProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
@@ -14,7 +15,8 @@ import javax.crypto.SecretKey;
 @Controller
 @RequiredArgsConstructor
 public class MainController {
-    private final SecretKey secretKey;
+    private final JwtTokenProvider jwtTokenProvider;
+
     @GetMapping("/")
     public String home(HttpServletRequest request){
 //        System.out.println(request.getHeader("accessToken"));
@@ -22,9 +24,6 @@ public class MainController {
     }
     @GetMapping("/main/hello")
     public String hello(HttpServletRequest req){
-
-        System.out.println(req.getHeader("Cookie"));
-
         return "main/hello";
     }
     @GetMapping("/admin/admin")

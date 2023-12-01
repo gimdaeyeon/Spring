@@ -4,9 +4,8 @@ import com.security.jwt.security.jwt.JwtAuthenticationFilter;
 import com.security.jwt.security.jwt.JwtTokenProvider;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,21 +23,16 @@ import javax.crypto.SecretKey;
 @EnableWebSecurity
 public class SecurityConfig {
     @Value("${jwt.secret}")
-    private  String secretKey;
-
-//    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-//    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-    // PasswordEncoder는 BCryptPasswordEncoder를 사용
+    String secretKey;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
     @Bean
-    public SecretKey createSecretKey(){
+    public SecretKey createSecretKey() {
         SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
         return key;
     }
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -68,8 +62,14 @@ public class SecurityConfig {
 //                                .defaultSuccessUrl("/")
 ////                                .successHandler(new CustomLoginSuccessHandler("/"))
 //                )
-                .exceptionHandling(exceptionHandling->{
-                    exceptionHandling.accessDeniedPage("/");
+                .exceptionHandling(exceptionHandling -> {
+                    exceptionHandling
+                            .authenticationEntryPoint((req, resp, authException) ->     //유효한 자격이 없는 상태에서 접근 할 때
+                                    resp.sendRedirect("/user/login"));   //401에러 발생
+
+                    exceptionHandling.accessDeniedHandler((req, resp, accessDeniedException) -> // 필요한 권한이 없는 상태에서 접근할 때
+                            resp.sendError(HttpServletResponse.SC_FORBIDDEN));  //403에러 발생
+                    exceptionHandling.accessDeniedPage("/main/home");   //에러 발생시 이동할 url forward 방식
                 });
 
 
