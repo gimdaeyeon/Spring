@@ -2,8 +2,8 @@ package com.security.jwt.controller;
 
 import com.security.jwt.domain.entity.User;
 import com.security.jwt.security.jwt.JwtTokenProvider;
+import com.security.jwt.security.jwt.TokenType;
 import com.security.jwt.service.UserService;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.Arrays;
-import java.util.Optional;
-
 @Controller
 @RequestMapping("/user/*")
 @RequiredArgsConstructor
@@ -28,14 +25,14 @@ public class UserController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/login")
-    public String login(HttpServletRequest req){
+    public String login(HttpServletRequest req,HttpServletResponse resp){
+
         String token = jwtTokenProvider.getTokenByRequest(req);
         token = jwtTokenProvider.validateToken(token)?token:null;
 
         if(token != null){
             return "main/hello";
         }
-
 
         return "user/login";
     }
@@ -67,6 +64,7 @@ public class UserController {
         Cookie cookie = new Cookie("accessToken",accessToken);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
+        cookie.setMaxAge((int) TokenType.ACCESS_TOKEN.getMaxAge());
 
         resp.addCookie(cookie);
 

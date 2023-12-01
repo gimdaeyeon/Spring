@@ -3,7 +3,10 @@ package com.example.securingweb.controller;
 import com.example.securingweb.domain.MemberDetails;
 import com.example.securingweb.domain.UserDto;
 import com.example.securingweb.service.UserService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,7 +29,8 @@ public class MvcController {
 
 
     @RequestMapping({"/","/home"})
-    public String goHome(){
+    public String goHome(HttpServletRequest request, HttpServletResponse response){
+
         return "home";
     }
 
@@ -37,6 +41,15 @@ public class MvcController {
 
     @GetMapping("/hello")
     public String goHelloPage(HttpServletRequest req){
+
+        Cookie[] cookies = req.getCookies();
+        Cookie c = null;
+        for(Cookie cookie :cookies){
+            if(cookie.getName().equals("cookieName")){
+                c = cookie;
+                break;
+            }
+        }
 
         MemberDetails memberDetails = (MemberDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 

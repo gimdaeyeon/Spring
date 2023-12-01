@@ -46,7 +46,7 @@ public class SecurityConfig {
                                 .requestMatchers("/main/hello").authenticated()
 //                        그 밖의 요청은 허용한다.
                                 .requestMatchers("/admin/admin")
-                                .hasAnyAuthority("USER", "ADMIN")
+                                .hasAnyAuthority( "ADMIN")
                                 .anyRequest().permitAll()
                 )
 //                내가 만든 JwtAuthenticationFilter를
@@ -64,12 +64,12 @@ public class SecurityConfig {
 //                )
                 .exceptionHandling(exceptionHandling -> {
                     exceptionHandling
-                            .authenticationEntryPoint((req, resp, authException) ->     //유효한 자격이 없는 상태에서 접근 할 때
-                                    resp.sendRedirect("/user/login"));   //401에러 발생
+                            .authenticationEntryPoint((req, resp, authException) ->  //유효한 자격이 없는 상태에서 접근 할 때
+                                    resp.sendRedirect("/user/login"));   // (로그인이 되어있지 않을 때)
 
                     exceptionHandling.accessDeniedHandler((req, resp, accessDeniedException) -> // 필요한 권한이 없는 상태에서 접근할 때
-                            resp.sendError(HttpServletResponse.SC_FORBIDDEN));  //403에러 발생
-                    exceptionHandling.accessDeniedPage("/main/home");   //에러 발생시 이동할 url forward 방식
+                            resp.sendRedirect("/"));  //403에러 발생
+//                    exceptionHandling.accessDeniedPage("/main/home");   //에러 발생시 이동할 url
                 });
 
 

@@ -24,7 +24,8 @@ public class JwtTokenProvider {
     private final SecretKey key;
 
     // 토큰 유효시간 30분
-    private final long tokenValidTime = 30 * 60 * 1000L;
+
+//    private final long tokenValidTime =  10000L;
 
     // 객체 초기화, secretKey를 Base64로 인코딩한다.
 //    @PostConstruct
@@ -42,7 +43,7 @@ public class JwtTokenProvider {
                     .subject(userPk)// JWT payload 에 저장되는 정보단위, 보통 여기서 user를 식별하는 값을 넣는다.
                     .add("authorities", authorities.stream().map(GrantedAuthority::getAuthority).toList())// 정보는 key / value 쌍으로 저장된다.
                     .issuedAt(now)// 토큰 발행 시간 정보
-                    .expiration(new Date(now.getTime() + tokenValidTime))// 토큰 유효 시간
+                    .expiration(new Date(now.getTime() + TokenType.ACCESS_TOKEN.getMaxAge()))// 토큰 유효 시간
                 .and()  //return back to the JwtBuilder
                 .signWith(key)  // 사용할 암호화 알고리즘과 signature 에 들어갈 secret값 세팅
                 .compact();
@@ -74,8 +75,6 @@ public class JwtTokenProvider {
 
     // 토큰에서 회원 정보 추출
     public String getUserPk(String token) {
-        SecretKey key = Jwts.SIG.HS256.key().build();
-        Jwts.parser().verifyWith(key);
         return Jwts.parser()
                 .verifyWith(key).build()
                 .parseSignedClaims(token)
