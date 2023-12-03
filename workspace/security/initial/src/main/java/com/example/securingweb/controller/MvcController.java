@@ -30,7 +30,7 @@ public class MvcController {
 
     @RequestMapping({"/","/home"})
     public String goHome(HttpServletRequest request, HttpServletResponse response){
-
+        System.out.println(SecurityContextHolder.getContext());
         return "home";
     }
 

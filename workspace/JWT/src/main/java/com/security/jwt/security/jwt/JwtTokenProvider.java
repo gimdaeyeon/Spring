@@ -41,7 +41,9 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .claims()// 정보 저장
                     .subject(userPk)// JWT payload 에 저장되는 정보단위, 보통 여기서 user를 식별하는 값을 넣는다.
-                    .add("authorities", authorities.stream().map(GrantedAuthority::getAuthority).toList())// 정보는 key / value 쌍으로 저장된다.
+                    .add("authorities", authorities.stream()
+                                    .map(GrantedAuthority::getAuthority)
+                                    .collect(Collectors.joining(",")))// 정보는 key / value 쌍으로 저장된다.
                     .issuedAt(now)// 토큰 발행 시간 정보
                     .expiration(new Date(now.getTime() + TokenType.ACCESS_TOKEN.getMaxAge()))// 토큰 유효 시간
                 .and()  //return back to the JwtBuilder
@@ -57,11 +59,11 @@ public class JwtTokenProvider {
                 .parseSignedClaims(token)
                 .getPayload();
 
-        String rawAuthorities = payload.get("authorities").toString();
-        rawAuthorities = rawAuthorities.substring(1, rawAuthorities.length() - 1); // 괄호 제거
+//        String rawAuthorities = payload.get("authorities").toString();
+//        rawAuthorities = rawAuthorities.substring(1, rawAuthorities.length() - 1); // 괄호 제거
 
         Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(rawAuthorities.split(","))
+                Arrays.stream(payload.get("authorities").toString().split(","))
                         .map(String::trim)
                         .map(SimpleGrantedAuthority::new)
                         .toList();
