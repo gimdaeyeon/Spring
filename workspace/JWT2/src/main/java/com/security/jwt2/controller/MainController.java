@@ -1,23 +1,15 @@
-package com.security.jwt.controller;
+package com.security.jwt2.controller;
 
-import com.google.gson.Gson;
-import com.security.jwt.domain.entity.User;
-import com.security.jwt.security.jwt.JwtTokenProvider;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.crypto.SecretKey;
-
 @Controller
 @RequiredArgsConstructor
 public class MainController {
-    private final JwtTokenProvider jwtTokenProvider;
+//    private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/")
     public String home(HttpServletResponse resp){
