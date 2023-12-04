@@ -1,6 +1,6 @@
 package com.security.jwt2.domain.entity;
 
-import com.security.jwt.domain.enumType.Authority;
+import com.security.jwt2.domain.enumType.Authority;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

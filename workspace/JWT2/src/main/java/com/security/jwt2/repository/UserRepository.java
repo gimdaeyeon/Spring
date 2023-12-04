@@ -1,8 +1,8 @@
 package com.security.jwt2.repository;
 
-import com.security.jwt.domain.entity.User;
-import com.security.jwt.domain.entity.UserAuthority;
-import com.security.jwt.domain.enumType.Authority;
+import com.security.jwt2.domain.entity.User;
+import com.security.jwt2.domain.entity.UserAuthority;
+import com.security.jwt2.domain.enumType.Authority;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;

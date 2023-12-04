@@ -1,5 +1,9 @@
 package com.security.jwt2.security;
 
+import com.security.jwt2.security.jwt.JwtAuthenticationFilter;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,14 +13,31 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.crypto.SecretKey;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    @Value("${jwt.accessSecret}")
+    String accessSecret;
+    @Value("${jwt.refreshSecret}")
+    String refreshSecret;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public SecretKey createAccessSecret(){
+        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(accessSecret));
+    }
+    @Bean
+    public SecretKey createRefreshSecret(){
+        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(refreshSecret));
+    }
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -33,13 +54,15 @@ public class SecurityConfig {
                                 .hasAnyAuthority( "ADMIN")
                                 .anyRequest().permitAll()
                 )
+                .addFilterBefore(new JwtAuthenticationFilter(),
+                        UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exceptionHandling -> {
                     exceptionHandling
                             .authenticationEntryPoint((req, resp, authException) ->  //유효한 자격이 없는 상태에서 접근 할 때
                                     resp.sendRedirect("/user/login"));   // (로그인이 되어있지 않을 때)
 
                     exceptionHandling.accessDeniedHandler((req, resp, accessDeniedException) -> // 필요한 권한이 없는 상태에서 접근할 때
-                            resp.sendRedirect("/"));  //403에러 발생
+                            resp.sendRedirect("/"));
 //                    exceptionHandling.accessDeniedPage("/main/home");   //에러 발생시 이동할 url
                 });
 
