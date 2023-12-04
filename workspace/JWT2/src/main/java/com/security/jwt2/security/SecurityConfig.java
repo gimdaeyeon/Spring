@@ -6,6 +6,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -24,18 +25,17 @@ public class SecurityConfig {
     String accessSecret;
     @Value("${jwt.refreshSecret}")
     String refreshSecret;
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
+    @Bean("accessSecret")
     public SecretKey createAccessSecret(){
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(accessSecret));
     }
-    @Bean
+    @Bean("refreshSecret")
     public SecretKey createRefreshSecret(){
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(refreshSecret));
+    }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 
