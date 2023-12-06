@@ -43,13 +43,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-//                세션리스 설정
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((requests) -> requests
-//                        해당  url로 들어온 요청은 인증을 해야한다
                                 .requestMatchers("/main/hello").authenticated()
-//                        그 밖의 요청은 허용한다.
                                 .requestMatchers("/admin/admin")
                                 .hasAnyAuthority( "ADMIN")
                                 .anyRequest().permitAll()
@@ -63,7 +60,6 @@ public class SecurityConfig {
 
                     exceptionHandling.accessDeniedHandler((req, resp, accessDeniedException) -> // 필요한 권한이 없는 상태에서 접근할 때
                             resp.sendRedirect("/"));
-//                    exceptionHandling.accessDeniedPage("/main/home");   //에러 발생시 이동할 url
                 });
 
         return httpSecurity.build();
