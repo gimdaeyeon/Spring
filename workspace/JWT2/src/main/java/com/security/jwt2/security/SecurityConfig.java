@@ -25,7 +25,7 @@ public class SecurityConfig {
     String accessSecret;
     @Value("${jwt.refreshSecret}")
     String refreshSecret;
-    @Bean("accessSecret")
+    @Bean("accessSecret") @Primary
     public SecretKey createAccessSecret(){
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(accessSecret));
     }

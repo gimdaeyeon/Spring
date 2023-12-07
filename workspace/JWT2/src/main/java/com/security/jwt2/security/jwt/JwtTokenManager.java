@@ -1,6 +1,7 @@
 package com.security.jwt2.security.jwt;
 
 import io.jsonwebtoken.Jwts;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,8 +19,7 @@ public class JwtTokenManager {
     private final SecretKey refreshKey;
 
     @Autowired
-    public JwtTokenManager(@Qualifier("accessSecret") SecretKey accessKey,
-                           @Qualifier("refreshSecret") SecretKey refreshKey) {
+    public JwtTokenManager(SecretKey accessKey, @Qualifier("refreshSecret") SecretKey refreshKey) {
         this.accessKey = accessKey;
         this.refreshKey = refreshKey;
     }
