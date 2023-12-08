@@ -14,14 +14,10 @@ public class UserController {
 
     @GetMapping("/login")
     public String login(HttpServletRequest req,HttpServletResponse resp){
-
-
         return "user/login";
     }
     @GetMapping("/join")
     public String join(HttpServletRequest req){
-
-
         return "user/join";
     }
 

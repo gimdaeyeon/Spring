@@ -8,9 +8,7 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "TBL_AUTHORITY")
-@Getter
-@Setter
-@ToString
+@Getter @Setter @ToString
 @SequenceGenerator(
         name = "SEQ_AUTHORITY_GENERATOR",
         sequenceName = "SEQ_AUTHORITY",
