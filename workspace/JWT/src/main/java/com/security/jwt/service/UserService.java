@@ -47,11 +47,13 @@ public class UserService implements UserDetailsService {
     }
     public String authenticateAndGetJwt(String loginId,String password){
         UserDetails user = loadUserByUsername(loginId);
+
         if(!passwordEncoder.matches(password, user.getPassword())){
             throw new UsernameNotFoundException("비밀번호가 일치하지 않습니다.");
         }
         String token =jwtTokenProvider.createToken(loginId,user.getAuthorities());
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return token;

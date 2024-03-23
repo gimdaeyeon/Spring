@@ -1,5 +1,6 @@
 package com.security.jwt2.controller;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
     @GetMapping("/")
-    public String home(HttpServletResponse resp){
+    public String home(HttpServletResponse resp,HttpServletRequest req){
+
+
         return "main/home";
     }
     @GetMapping("/main/hello")
@@ -23,3 +26,16 @@ public class MainController {
         return "admin/admin";
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

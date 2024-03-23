@@ -7,6 +7,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.Session;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,8 +30,10 @@ public class MvcController {
 
 
     @RequestMapping({"/","/home"})
-    public String goHome(HttpServletRequest request, HttpServletResponse response){
-        System.out.println(SecurityContextHolder.getContext());
+    public String goHome(HttpSession session, HttpServletRequest request, HttpServletResponse response){
+//        HttpSession session = request.getSession();
+
+
         return "home";
     }
 

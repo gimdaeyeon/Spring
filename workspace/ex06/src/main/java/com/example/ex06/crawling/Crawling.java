@@ -24,9 +24,7 @@ public class Crawling {
     private WebDriver driver;
 
     private int page = 1;
-//    private String url = "https://www.jobkorea.co.kr/Search/?stext=spring%20boot&tabType=recruit&Page_No=" + page;
-    private String url = "https://map.kakao.com/?q=동인천역";
-
+    private String url = "https://www.jobkorea.co.kr/Search/?stext=spring%20boot&tabType=recruit&Page_No=" + page;
 
     public List<String> doProcess() {
         System.setProperty(web_driver_id, driverPath);
@@ -54,7 +52,7 @@ public class Crawling {
     private void printResult() {
         driver.get(url);
 
-        List<WebElement> elements = driver.findElements(By.cssSelector(".suggest .suggest_list_target>.ms_item .emph_keyword"));
+        List<WebElement> elements = driver.findElements(By.cssSelector(".list-default .title"));
 
         for (WebElement element : elements) {
             System.out.println("=================");
@@ -69,7 +67,7 @@ public class Crawling {
         List<WebElement> elements = null;
 
         while(true){
-//            url = "https://www.jobkorea.co.kr/Search/?stext=spring%20boot&tabType=recruit&Page_No="+page;
+            url = "https://www.jobkorea.co.kr/Search/?stext=spring%20boot&tabType=recruit&Page_No="+page;
 
             driver.get(url);
 
@@ -84,15 +82,14 @@ public class Crawling {
                 break;
             }
 
-            elements = driver.findElements(By.cssSelector(".suggest .suggest_list_target .ms_item .emph_keyword"));
+            elements = driver.findElements(By.cssSelector(".list-default .title"));
 
             for(WebElement element : elements){
                 resultList.add(element.getText());
             }
-//            page++;
+            page++;
         }
 
-        System.out.println(resultList);
         return resultList;
     }
 
