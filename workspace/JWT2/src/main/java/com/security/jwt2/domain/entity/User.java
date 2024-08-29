@@ -1,6 +1,7 @@
 package com.security.jwt2.domain.entity;
 
 import com.security.jwt2.domain.base.Period;
+import com.security.jwt2.domain.dto.user.UserDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,15 +22,23 @@ public class User extends Period {
     private Long id;
     private String loginId;
     private String password;
-    private String name;
-    private Integer age;
+    private String nickname;
 
     @Builder
-    public User(Integer age, Long id, String loginId, String name, String password) {
-        this.age = age;
+    public User(Long id, String loginId, String nickname, String password) {
         this.id = id;
         this.loginId = loginId;
-        this.name = name;
+        this.nickname = nickname;
         this.password = password;
     }
+
+    public UserDto toDto(){
+        UserDto user = new UserDto();
+        user.setId(id);
+        user.setLoginId(loginId);
+        user.setPassword(password);
+        user.setNickname(nickname);
+        return user;
+    }
+
 }
