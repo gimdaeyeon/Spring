@@ -36,7 +36,6 @@ public class Crawling {
         options.addArguments("--disable-gpu");         //gpu 비활성화
         options.addArguments("--blink-settings=imagesEnabled=false"); //이미지 다운 안받음
 
-
         driver = new ChromeDriver(options);    //드라이버 객체 생성
 
         WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(10));

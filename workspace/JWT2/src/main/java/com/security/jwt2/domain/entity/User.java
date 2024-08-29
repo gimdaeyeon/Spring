@@ -1,9 +1,8 @@
 package com.security.jwt2.domain.entity;
 
+import com.security.jwt2.domain.base.Period;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,8 @@ import java.util.List;
         sequenceName = "SEQ_USER",
         allocationSize = 1
 )
-public class User {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class User extends Period {
     @Id @GeneratedValue(generator ="SEQ_USER_GENERATOR" )
     private Long id;
     private String loginId;
@@ -24,6 +24,12 @@ public class User {
     private String name;
     private Integer age;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
-    List<UserAuthority> authorities = new ArrayList<>();
+    @Builder
+    public User(Integer age, Long id, String loginId, String name, String password) {
+        this.age = age;
+        this.id = id;
+        this.loginId = loginId;
+        this.name = name;
+        this.password = password;
+    }
 }

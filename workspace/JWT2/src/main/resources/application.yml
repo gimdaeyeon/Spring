@@ -9,10 +9,10 @@ spring:
     password: 1234
   jpa:
     hibernate:
-#                  ddl-auto: create
+      #                  ddl-auto: create
       #            ddl-auto: create-drop
-      #            ddl-auto: update
-      ddl-auto: validate
+      ddl-auto: update
+  #      ddl-auto: validate
   security:
     user:
       name: aaa
@@ -22,5 +22,4 @@ jwt:
   header: Authorization
   #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
   accessSecret: a2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbQ==
-  refreshSecret: KezERsrXTNgf3pY79u19MUUZJHbf4Lj0IKIbNYs1rIR8tmrxAJLMjWq6v4pa9dm2xI40JWsXqAfj0o5IKAsdaopfjio98fh139fh43fh439tyh934thg243htg90324hg932459ph439h3ewrg93o4thgffg934ht9g394phg2903hg290348ghpew4q9gPN
   token-validity-in-seconds: 86400 # ttl (초)
