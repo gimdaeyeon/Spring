@@ -1,7 +1,7 @@
 package com.security.jwt2.service;
 
 import com.security.jwt2.domain.dto.user.UserDto;
-import com.security.jwt2.domain.entity.User;
+import com.security.jwt2.domain.document.User;
 import com.security.jwt2.repository.UserRepository;
 import com.security.jwt2.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -30,6 +32,10 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("해당하는 유저가 없습니다."));
 
         return new CustomUserDetails(user.toDto());
+    }
+
+    public List<User> findAll(){
+        return userRepository.findAll();
     }
 
     private String encodePassword(String password){

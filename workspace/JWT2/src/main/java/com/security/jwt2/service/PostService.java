@@ -1,7 +1,7 @@
 package com.security.jwt2.service;
 
 import com.security.jwt2.domain.dto.post.PostDto;
-import com.security.jwt2.domain.entity.Post;
+import com.security.jwt2.domain.document.Post;
 import com.security.jwt2.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class PostService {
         postRepository.save(postDto.toEntity());
     }
 
-    public PostDto getPostOne(Long postId){
+    public PostDto getPostOne(String postId){
         return postRepository.findById(postId)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 게시글"))
                 .toDto();
@@ -36,7 +36,7 @@ public class PostService {
         postRepository.save(postDto.toEntity());
     }
 
-    public void removePost(Long postId){
+    public void removePost(String postId){
 
         postRepository.delete(
                 postRepository.findById(postId)

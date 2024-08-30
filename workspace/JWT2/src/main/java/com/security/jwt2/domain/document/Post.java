@@ -1,27 +1,23 @@
-package com.security.jwt2.domain.entity;
+package com.security.jwt2.domain.document;
 
 import com.security.jwt2.domain.base.Period;
 import com.security.jwt2.domain.dto.post.PostDto;
 import jakarta.persistence.*;
 import lombok.*;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "TBL_POST")
+@Document("vue_post")
 @Getter @Setter @ToString
-@SequenceGenerator(
-        name = "SEQ_POST_GENERATOR",
-        sequenceName = "SEQ_POST",
-        allocationSize = 1
-)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post extends Period {
-    @Id @GeneratedValue(generator ="SEQ_POST_GENERATOR")
-    private Long id;
+    @Id
+    private String id;
     private String title;
     private String content;
 
     @Builder
-    public Post(String content, Long id, String title) {
+    public Post(String content, String id, String title) {
         this.content = content;
         this.id = id;
         this.title = title;

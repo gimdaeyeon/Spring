@@ -2,11 +2,12 @@ server:
   port: 10000
 
 spring:
-  datasource:
-    driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@localhost:1521:XE
-    username: test
-    password: 1234
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  data:
+    mongodb:
+      uri: mongodb+srv://test:1234@mycluster.mwgck.mongodb.net/?retryWrites=true&w=majority&appName=myCluster
+      database: myCluster
   jpa:
     hibernate:
       #                  ddl-auto: create
@@ -21,4 +22,4 @@ spring:
 jwt:
   #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
   secret: a2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbQ==
-  expiration_time : : 86400 # ttl (초)
+  expiration_time : 86400 # ttl (초)

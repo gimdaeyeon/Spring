@@ -13,7 +13,7 @@ public class UserRestController {
 
     @PostMapping("/signup")
     public void join(@RequestBody UserDto userDto){
-
+        userService.register(userDto);
     }
 
     @PostMapping("/login")

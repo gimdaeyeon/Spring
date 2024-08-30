@@ -29,18 +29,18 @@ public class PostRestController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<PostDto> getPostOne(@PathVariable("postId")Long postId){
+    public ResponseEntity<PostDto> getPostOne(@PathVariable("postId")String postId){
         return ResponseEntity.ok(postService.getPostOne(postId));
     }
 
     @PutMapping("/{postId}")
-    public void modifyPostOne(@PathVariable("postId")Long postId,
+    public void modifyPostOne(@PathVariable("postId")String postId,
                               @RequestBody PostDto postDto){
         postService.modifyPost(postDto);
     }
 
     @DeleteMapping("/{postId}")
-    public void removePostOne(@PathVariable("postId")Long postId){
+    public void removePostOne(@PathVariable("postId")String postId){
         postService.removePost(postId);
     }
 

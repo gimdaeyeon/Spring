@@ -1,18 +1,18 @@
 package com.security.jwt2.domain.dto.user;
 
-import com.security.jwt2.domain.entity.User;
+import com.security.jwt2.domain.document.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 public class UserDto {
-    private Long id;
+    private String id;
     private String loginId;
     private String password;
     private String nickname;
 
-    public UserDto(Long id, String loginId, String nickname, String password) {
+    public UserDto(String id, String loginId, String nickname, String password) {
         this.id = id;
         this.loginId = loginId;
         this.nickname = nickname;
@@ -21,7 +21,6 @@ public class UserDto {
 
     public User toEntity(){
         return User.builder()
-                .id(id)
                 .nickname(nickname)
                 .loginId(loginId)
                 .password(password)
