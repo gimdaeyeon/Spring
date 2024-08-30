@@ -38,6 +38,11 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+    public String login(UserDto user){
+        return null;
+    }
+
+
     private String encodePassword(String password){
         return passwordEncoder.encode(password);
     }
