@@ -154,3 +154,5 @@ resource/
 
 application.properties
 *.properties
+
+*.yml
