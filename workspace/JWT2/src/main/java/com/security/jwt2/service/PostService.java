@@ -15,6 +15,7 @@ import java.util.List;
 public class PostService {
     private final PostRepository postRepository;
 
+    @Transactional(readOnly = true)
     public List<PostDto> getPostAll(){
         return postRepository.findAll()
                 .stream()
@@ -26,6 +27,7 @@ public class PostService {
         postRepository.save(postDto.toEntity());
     }
 
+    @Transactional(readOnly = true)
     public PostDto getPostOne(String postId){
         return postRepository.findById(postId)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 게시글"))

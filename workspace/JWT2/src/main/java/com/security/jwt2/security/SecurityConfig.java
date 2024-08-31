@@ -1,5 +1,7 @@
 package com.security.jwt2.security;
 
+import com.security.jwt2.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -7,17 +9,18 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    private final JwtUtil jwtUtil;
+    private final UserService userService;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -32,19 +35,18 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
 
-                .exceptionHandling(exceptionHandling -> {
-                            exceptionHandling
-                                    .authenticationEntryPoint((req, resp, authException) ->  //유효한 자격이 없는 상태에서 접근 할 때
-                                            resp.sendRedirect("/user/login"));   // (로그인이 되어있지 않을 때)
+//                JwtAuthFilter를  UsernamePasswordAuthenticationFilter 앞에 추가
+                .addFilterBefore(new JwtAuthFilter(userService, jwtUtil), UsernamePasswordAuthenticationFilter.class)
 
-                            exceptionHandling.accessDeniedHandler((req, resp, accessDeniedException) -> // 필요한 권한이 없는 상태에서 접근할 때
-                                    resp.sendRedirect("/"));
-                        }
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(authenticationEntryPoint)
+                        .accessDeniedHandler(accessDeniedHandler)
                 )
 //                권한 규칙작성
                 .authorizeHttpRequests(authorize -> authorize
+//                                .requestMatchers("/users/signup","/users/login").permitAll()
+//                                .anyRequest().authenticated()
                                 .requestMatchers("*").permitAll()
-//               @PreAuthrization을 사용할 것이기 때문에 모든 경로에 대한 인증처리는 Pass
                                 .anyRequest().permitAll()
                 )
         ;
