@@ -1,7 +1,7 @@
 package com.security.jwt2.service;
 
-import com.security.jwt2.domain.dto.user.UserDto;
 import com.security.jwt2.domain.document.User;
+import com.security.jwt2.domain.dto.user.UserDto;
 import com.security.jwt2.exception.UserAlreadyExistsException;
 import com.security.jwt2.repository.UserRepository;
 import com.security.jwt2.security.CustomUserDetails;
@@ -25,12 +25,13 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder encoder;
     private final JwtUtil jwtUtil;
 
-    public void register(UserDto userDto) throws UserAlreadyExistsException {
+    public UserDto register(UserDto userDto) throws UserAlreadyExistsException {
         if(userRepository.existsByLoginId(userDto.getLoginId())){
             throw new UserAlreadyExistsException("이미 존재하는 유저id");
         }
         userDto.setPassword(encodePassword(userDto.getPassword()));
-        userRepository.save(userDto.toEntity());
+        User savedUser = userRepository.save(userDto.toEntity());
+        return savedUser.toDto();
     }
 
     @Override

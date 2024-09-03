@@ -28,9 +28,12 @@ public class User extends Period {
 
     public UserDto toDto(){
         UserDto user = new UserDto();
+        user.setId(id);
         user.setLoginId(loginId);
         user.setPassword(password);
         user.setNickname(nickname);
+        user.setCreatedDate(getCreatedDate());
+        user.setModifiedDate(getModifiedDate());
         return user;
     }
 

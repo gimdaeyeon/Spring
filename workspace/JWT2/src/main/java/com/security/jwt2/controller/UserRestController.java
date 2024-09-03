@@ -16,16 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/users/*")
+@RequestMapping("/api/users/*")
 @RequiredArgsConstructor
 public class UserRestController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<Void> join(@RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> join(@RequestBody UserDto userDto){
         try {
-            userService.register(userDto);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(userService.register(userDto));
         } catch (UserAlreadyExistsException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }catch (Exception e){
@@ -33,9 +32,9 @@ public class UserRestController {
         }
     }
 
+
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserDto user){
-        log.info("userDto : {}", user);
 
         try {
             return ResponseEntity.ok(userService.login(user));

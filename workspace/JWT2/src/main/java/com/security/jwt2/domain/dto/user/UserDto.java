@@ -4,6 +4,8 @@ import com.security.jwt2.domain.document.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 public class UserDto {
@@ -11,10 +13,14 @@ public class UserDto {
     private String loginId;
     private String password;
     private String nickname;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
 
-    public UserDto(String id, String loginId, String nickname, String password) {
+    public UserDto(LocalDateTime createdDate, String id, String loginId, LocalDateTime modifiedDate, String nickname, String password) {
+        this.createdDate = createdDate;
         this.id = id;
         this.loginId = loginId;
+        this.modifiedDate = modifiedDate;
         this.nickname = nickname;
         this.password = password;
     }
