@@ -23,7 +23,6 @@ import java.util.List;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
-    private final JwtUtil jwtUtil;
 
     public UserDto register(UserDto userDto) throws UserAlreadyExistsException {
         if(userRepository.existsByLoginId(userDto.getLoginId())){
@@ -49,7 +48,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional(readOnly = true)
-    public String login(UserDto userDto){
+    public UserDto login(UserDto userDto){
         User user = userRepository.findByLoginId(userDto.getLoginId())
                 .orElseThrow(() -> new UsernameNotFoundException("아이디가 존재하지 않습니다."));
 
@@ -57,7 +56,7 @@ public class UserService implements UserDetailsService {
             throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
         }
 
-        return jwtUtil.createAccessToken(user.toDto());
+        return user.toDto();
     }
 
 

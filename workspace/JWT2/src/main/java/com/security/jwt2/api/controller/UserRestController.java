@@ -1,7 +1,9 @@
-package com.security.jwt2.controller;
+package com.security.jwt2.api.controller;
 
+import com.security.jwt2.api.dto.LoginRespDto;
 import com.security.jwt2.domain.dto.user.UserDto;
 import com.security.jwt2.exception.UserAlreadyExistsException;
+import com.security.jwt2.security.JwtUtil;
 import com.security.jwt2.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,28 +22,43 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserRestController {
     private final UserService userService;
+    private final JwtUtil jwtUtil;
 
     @PostMapping("/signup")
-    public ResponseEntity<UserDto> join(@RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> join(@RequestBody UserDto userDto) {
         try {
             return ResponseEntity.ok(userService.register(userDto));
         } catch (UserAlreadyExistsException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
 
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserDto user){
+    public ResponseEntity<LoginRespDto> login(@RequestBody UserDto user) {
 
         try {
-            return ResponseEntity.ok(userService.login(user));
+            UserDto loggedUser = userService.login(user);
+            String accessToken = jwtUtil.createAccessToken(loggedUser);
+            LoginRespDto resp = new LoginRespDto(loggedUser);
+            resp.setToken(accessToken);
+            resp.setSuccess(true);
+            resp.setMessage("Login Success");
+            return ResponseEntity.ok(resp);
         } catch (UsernameNotFoundException | BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(LoginRespDto.builder()
+                            .success(false)
+                            .message("Authentication failed. User not found")
+                            .build());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body(LoginRespDto.builder()
+                            .success(false)
+                            .message("Internal Server Error")
+                            .build());
         }
     }
 

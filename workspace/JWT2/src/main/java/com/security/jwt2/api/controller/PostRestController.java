@@ -1,4 +1,4 @@
-package com.security.jwt2.controller;
+package com.security.jwt2.api.controller;
 
 import com.security.jwt2.domain.dto.post.PostDto;
 import com.security.jwt2.service.PostService;

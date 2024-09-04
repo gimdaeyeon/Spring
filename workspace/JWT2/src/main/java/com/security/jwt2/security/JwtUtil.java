@@ -30,7 +30,7 @@ public class JwtUtil {
     }
 
 //    Jwt 생성
-    public String createToken(UserDto user,long expireTime){
+    private String createToken(UserDto user,long expireTime){
         ZonedDateTime now = ZonedDateTime.now();
         return Jwts.builder()
                 .subject(user.getLoginId())
