@@ -3,6 +3,7 @@ package com.security.jwt2.security;
 import com.security.jwt2.domain.document.User;
 import com.security.jwt2.domain.dto.user.UserDto;
 import com.security.jwt2.repository.UserRepository;
+import com.security.jwt2.security.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,6 +27,6 @@ public class AuthService {
             throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
         }
 
-        return jwtUtil.createAccessToken(user.toDto());
+        return jwtUtil.createAccessToken(user.toDto().getLoginId());
     }
 }

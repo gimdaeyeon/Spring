@@ -5,7 +5,6 @@ import com.security.jwt2.domain.dto.user.UserDto;
 import com.security.jwt2.exception.UserAlreadyExistsException;
 import com.security.jwt2.repository.UserRepository;
 import com.security.jwt2.security.CustomUserDetails;
-import com.security.jwt2.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;

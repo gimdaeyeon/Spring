@@ -1,15 +1,18 @@
 package com.security.jwt2.security;
 
+import com.security.jwt2.security.jwt.JwtAuthFilter;
+import com.security.jwt2.security.jwt.JwtUtil;
 import com.security.jwt2.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -22,10 +25,10 @@ import java.util.List;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final JwtUtil jwtUtil;
-    private final UserService userService;
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
     private final CustomAccessDeniedHandler accessDeniedHandler;
+    private final JwtUtil jwtUtil;
+    private final UserService userService;
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){
@@ -41,8 +44,10 @@ public class SecurityConfig {
         return source;
     }
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors->cors.configurationSource(corsConfigurationSource()))
@@ -55,21 +60,21 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
 
 //                JwtAuthFilter를  UsernamePasswordAuthenticationFilter 앞에 추가
-                .addFilterBefore(new JwtAuthFilter(userService, jwtUtil), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthFilter(jwtUtil,userService),
+                        UsernamePasswordAuthenticationFilter.class)
 
                 //                권한 규칙작성
                 .authorizeHttpRequests(authorize -> authorize
-//                                .requestMatchers("/users/login","/users/signup").permitAll()
-//                                .anyRequest().authenticated()
-                                .requestMatchers("*").permitAll()
-                                .anyRequest().permitAll()
+                                .requestMatchers("/api/users/login","/api/users/signup").permitAll()
+                                .anyRequest().authenticated()
+//                                .requestMatchers("*").permitAll()
+//                                .anyRequest().permitAll()
                 )
 
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint(authenticationEntryPoint)
                         .accessDeniedHandler(accessDeniedHandler)
                 )
-
         ;
 
         return httpSecurity.build();

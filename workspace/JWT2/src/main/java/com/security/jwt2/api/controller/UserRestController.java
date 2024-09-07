@@ -3,7 +3,7 @@ package com.security.jwt2.api.controller;
 import com.security.jwt2.api.dto.LoginRespDto;
 import com.security.jwt2.domain.dto.user.UserDto;
 import com.security.jwt2.exception.UserAlreadyExistsException;
-import com.security.jwt2.security.JwtUtil;
+import com.security.jwt2.security.jwt.JwtUtil;
 import com.security.jwt2.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +41,7 @@ public class UserRestController {
 
         try {
             UserDto loggedUser = userService.login(user);
-            String accessToken = jwtUtil.createAccessToken(loggedUser);
+            String accessToken = jwtUtil.createAccessToken(loggedUser.getLoginId());
             LoginRespDto resp = new LoginRespDto(loggedUser);
             resp.setToken(accessToken);
             resp.setSuccess(true);
