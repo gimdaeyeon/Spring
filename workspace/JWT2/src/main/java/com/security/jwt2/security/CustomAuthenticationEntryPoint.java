@@ -23,9 +23,14 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        log.error("Not Authenticated Request",authException);
+        log.error("Not Authenticated Request", authException);
 
-        ErrorResponseDto errorResponseDto = new ErrorResponseDto(HttpStatus.UNAUTHORIZED.value(), authException.getMessage(), LocalDateTime.now());
+        ErrorResponseDto errorResponseDto = ErrorResponseDto.builder()
+                .errorCode(HttpStatus.UNAUTHORIZED.value())
+                .message(authException.getMessage())
+                .eventTime(LocalDateTime.now())
+                .build();
+
 
         String responseBody = objectMapper.writeValueAsString(errorResponseDto);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
@@ -33,6 +38,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(responseBody);
     }
+
 }
 
 

@@ -29,8 +29,8 @@ public class JwtUtil {
     private String createToken(String loginId, long expireTime) {
         return Jwts.builder()
                 .subject(loginId)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + expireTime))
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis()+(1000*expireTime)))
                 .signWith(secretKey)
                 .compact();
     }
@@ -41,7 +41,7 @@ public class JwtUtil {
     }
 
     //    Jwt 검증
-    public boolean isValidToken(String token) {
+    public boolean isExpiredToken(String token) {
         return parseClaims(token)
                 .getExpiration()
                 .before(new Date());

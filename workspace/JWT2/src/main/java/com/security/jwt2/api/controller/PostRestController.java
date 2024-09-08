@@ -4,12 +4,13 @@ import com.security.jwt2.domain.dto.post.PostDto;
 import com.security.jwt2.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/posts ")
+@RequestMapping("/api/posts")
 @RequiredArgsConstructor
 public class PostRestController {
     private final PostService postService;

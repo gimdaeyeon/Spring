@@ -42,8 +42,9 @@ public class JwtAuthFilter extends OncePerRequestFilter { // OncePerRequestFilte
         }
 
         String token = authorizationHeader.split(" ")[1];
+
 //            jwt 유효성 검증
-        if (!jwtUtil.isValidToken(token)) {
+        if (jwtUtil.isExpiredToken(token)){
             log.info("token is expired");
             filterChain.doFilter(request, response);
             return;
@@ -61,6 +62,7 @@ public class JwtAuthFilter extends OncePerRequestFilter { // OncePerRequestFilte
 
         filterChain.doFilter(request, response);// 다음 필터로 넘기기
     }
+
 }
 
 
