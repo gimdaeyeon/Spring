@@ -28,6 +28,8 @@ public class Post extends Period {
         dto.setId(id);
         dto.setTitle(title);
         dto.setContent(content);
+        dto.setCreatedDate(getCreatedDate());
+        dto.setModifiedDate(getModifiedDate());
         return dto;
     }
 

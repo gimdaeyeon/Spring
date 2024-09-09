@@ -25,8 +25,8 @@ public class PostRestController {
     }
 
     @PostMapping
-    public void createPost(@RequestBody PostDto postDto){
-        postService.register(postDto);
+    public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto){
+        return ResponseEntity.ok(postService.register(postDto));
     }
 
     @GetMapping("/{postId}")

@@ -23,8 +23,9 @@ public class PostService {
                 .toList();
     }
 
-    public void register(PostDto postDto){
-        postRepository.save(postDto.toEntity());
+    public PostDto register(PostDto postDto){
+        Post savedPost = postRepository.save(postDto.toEntity());
+        return savedPost.toDto();
     }
 
     @Transactional(readOnly = true)
