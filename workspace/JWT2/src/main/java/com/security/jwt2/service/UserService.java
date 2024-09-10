@@ -2,7 +2,7 @@ package com.security.jwt2.service;
 
 import com.security.jwt2.domain.document.User;
 import com.security.jwt2.domain.dto.user.UserDto;
-import com.security.jwt2.exception.UserAlreadyExistsException;
+import com.security.jwt2.exception.AlreadyExistsException;
 import com.security.jwt2.repository.UserRepository;
 import com.security.jwt2.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +23,9 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
 
-    public UserDto register(UserDto userDto) throws UserAlreadyExistsException {
+    public UserDto register(UserDto userDto) throws AlreadyExistsException {
         if(userRepository.existsByLoginId(userDto.getLoginId())){
-            throw new UserAlreadyExistsException("이미 존재하는 유저id");
+            throw new AlreadyExistsException("이미 존재하는 유저id");
         }
         userDto.setPassword(encodePassword(userDto.getPassword()));
         User savedUser = userRepository.save(userDto.toEntity());

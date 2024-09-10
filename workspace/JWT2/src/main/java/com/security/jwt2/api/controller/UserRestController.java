@@ -2,7 +2,7 @@ package com.security.jwt2.api.controller;
 
 import com.security.jwt2.api.dto.LoginRespDto;
 import com.security.jwt2.domain.dto.user.UserDto;
-import com.security.jwt2.exception.UserAlreadyExistsException;
+import com.security.jwt2.exception.AlreadyExistsException;
 import com.security.jwt2.security.jwt.JwtUtil;
 import com.security.jwt2.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class UserRestController {
     public ResponseEntity<UserDto> join(@RequestBody UserDto userDto) {
         try {
             return ResponseEntity.ok(userService.register(userDto));
-        } catch (UserAlreadyExistsException e) {
+        } catch (AlreadyExistsException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();

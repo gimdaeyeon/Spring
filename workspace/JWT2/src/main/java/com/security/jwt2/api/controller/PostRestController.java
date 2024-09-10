@@ -1,6 +1,7 @@
 package com.security.jwt2.api.controller;
 
 import com.security.jwt2.domain.dto.post.PostDto;
+import com.security.jwt2.exception.AlreadyExistsException;
 import com.security.jwt2.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,11 @@ public class PostRestController {
 
     @PostMapping
     public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto){
-        return ResponseEntity.ok(postService.register(postDto));
+        try {
+            return ResponseEntity.ok(postService.register(postDto));
+        } catch (AlreadyExistsException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("/{postId}")

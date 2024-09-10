@@ -3,9 +3,8 @@ package com.security.jwt2.service;
 import com.security.jwt2.domain.document.User;
 import com.security.jwt2.domain.dto.post.PostDto;
 import com.security.jwt2.domain.dto.user.UserDto;
-import com.security.jwt2.exception.UserAlreadyExistsException;
+import com.security.jwt2.exception.AlreadyExistsException;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ class ServiceTest {
 
     @Test
     @DisplayName("mongodb 유저 등록 테스트")
-    void registerUserTest() throws UserAlreadyExistsException {
+    void registerUserTest() throws AlreadyExistsException {
         UserDto user = new UserDto();
 
         user.setLoginId("bb");
