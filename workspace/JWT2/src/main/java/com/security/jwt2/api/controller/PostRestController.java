@@ -42,7 +42,8 @@ public class PostRestController {
     @PutMapping("/{postId}")
     public void modifyPostOne(@PathVariable("postId")String postId,
                               @RequestBody PostDto postDto){
-        postService.modifyPost(postDto);
+            postDto.setId(postId);
+            postService.modifyPost(postDto);
     }
 
     @DeleteMapping("/{postId}")

@@ -39,8 +39,13 @@ public class PostService {
                 .toDto();
     }
 
-    public void modifyPost(PostDto postDto) {
-        postRepository.save(postDto.toEntity());
+    public void modifyPost(PostDto postDto){
+        Post post = postRepository.findById(postDto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
+        post.setTitle(postDto.getTitle());
+        post.setContent(postDto.getContent());
+
+        postRepository.save(post);
     }
 
     public void removePost(String postId) {

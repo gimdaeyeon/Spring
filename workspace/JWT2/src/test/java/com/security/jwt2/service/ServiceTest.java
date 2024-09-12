@@ -43,7 +43,7 @@ class ServiceTest {
 
     @Test
     @DisplayName("Post 등록 테스트")
-    void registerPostTest(){
+    void registerPostTest() throws Exception{
         PostDto post = new PostDto();
 
         post.setTitle("제목");
