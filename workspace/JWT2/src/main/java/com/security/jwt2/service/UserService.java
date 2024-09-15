@@ -1,6 +1,6 @@
 package com.security.jwt2.service;
 
-import com.security.jwt2.domain.document.User;
+import com.security.jwt2.domain.entity.User;
 import com.security.jwt2.domain.dto.user.UserDto;
 import com.security.jwt2.exception.AlreadyExistsException;
 import com.security.jwt2.repository.UserRepository;

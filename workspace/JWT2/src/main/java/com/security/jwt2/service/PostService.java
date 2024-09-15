@@ -1,7 +1,7 @@
 package com.security.jwt2.service;
 
-import com.security.jwt2.domain.document.Post;
 import com.security.jwt2.domain.dto.post.PostDto;
+import com.security.jwt2.domain.entity.Post;
 import com.security.jwt2.exception.AlreadyExistsException;
 import com.security.jwt2.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public PostDto getPostOne(String postId) {
+    public PostDto getPostOne(Long postId) {
         return postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글"))
                 .toDto();
@@ -44,12 +44,9 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
-
-        postRepository.save(post);
     }
 
-    public void removePost(String postId) {
-
+    public void removePost(Long postId) {
         postRepository.delete(
                 postRepository.findById(postId)
                         .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."))

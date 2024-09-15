@@ -1,6 +1,6 @@
 package com.security.jwt2.security;
 
-import com.security.jwt2.domain.document.User;
+import com.security.jwt2.domain.entity.User;
 import com.security.jwt2.domain.dto.user.UserDto;
 import com.security.jwt2.repository.UserRepository;
 import com.security.jwt2.security.jwt.JwtUtil;

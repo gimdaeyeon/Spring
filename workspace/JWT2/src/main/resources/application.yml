@@ -2,18 +2,27 @@ server:
   port: 10000
 
 spring:
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-  data:
-    mongodb:
-      uri: mongodb+srv://test:1234@mycluster.mwgck.mongodb.net/?retryWrites=true&w=majority&appName=myCluster
-      database: myCluster
+#  autoconfigure:
+#    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+#  data:
+#    mongodb:
+#      uri: mongodb+srv://test:1234@mycluster.mwgck.mongodb.net/?retryWrites=true&w=majority&appName=myCluster
+#      database: myCluster
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://mysqldb:3306/vue_til?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/vue_til?serverTimezone=Asia/Seoul
+    username: root
+    password: 1234
   jpa:
     hibernate:
       #                  ddl-auto: create
       #            ddl-auto: create-drop
       ddl-auto: update
   #      ddl-auto: validate
+    properties:
+      hibernate:
+        use_sql_comments: true
   security:
     user:
       name: aaa

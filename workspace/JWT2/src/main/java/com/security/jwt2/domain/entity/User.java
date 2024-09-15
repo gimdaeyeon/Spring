@@ -1,24 +1,24 @@
-package com.security.jwt2.domain.document;
+package com.security.jwt2.domain.entity;
 
 import com.security.jwt2.domain.base.Period;
 import com.security.jwt2.domain.dto.user.UserDto;
 import jakarta.persistence.*;
 import lombok.*;
-import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("vue_user")
-@Getter @Setter @ToString
+@Entity
+@Table(name = "vue_user")
+@Getter @Setter @ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends Period {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String loginId;
     private String password;
     private String nickname;
 
     @Builder
-    public User(String id, String loginId, String nickname, String password) {
+    public User(Long id, String loginId, String nickname, String password) {
         this.id = id;
         this.loginId = loginId;
         this.nickname = nickname;

@@ -4,12 +4,14 @@ import com.security.jwt2.domain.dto.post.PostDto;
 import com.security.jwt2.exception.AlreadyExistsException;
 import com.security.jwt2.service.PostService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/posts")
 @RequiredArgsConstructor
@@ -35,19 +37,19 @@ public class PostRestController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<PostDto> getPostOne(@PathVariable("postId")String postId){
+    public ResponseEntity<PostDto> getPostOne(@PathVariable("postId")Long postId){
         return ResponseEntity.ok(postService.getPostOne(postId));
     }
 
     @PutMapping("/{postId}")
-    public void modifyPostOne(@PathVariable("postId")String postId,
+    public void modifyPostOne(@PathVariable("postId")Long postId,
                               @RequestBody PostDto postDto){
             postDto.setId(postId);
             postService.modifyPost(postDto);
     }
 
     @DeleteMapping("/{postId}")
-    public void removePostOne(@PathVariable("postId")String postId){
+    public void removePostOne(@PathVariable("postId")Long postId){
         postService.removePost(postId);
     }
 
