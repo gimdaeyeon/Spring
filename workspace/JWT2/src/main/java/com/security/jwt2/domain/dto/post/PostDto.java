@@ -14,8 +14,10 @@ public class PostDto {
     private String content;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
+    private String loginId;
 
-    public PostDto(String content, LocalDateTime createdDate, Long id, LocalDateTime modifiedDate, String title) {
+    public PostDto(String loginId, String content, LocalDateTime createdDate, Long id, LocalDateTime modifiedDate, String title) {
+        this.loginId = loginId;
         this.content = content;
         this.createdDate = createdDate;
         this.id = id;

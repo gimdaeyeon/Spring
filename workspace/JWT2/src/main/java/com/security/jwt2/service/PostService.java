@@ -2,8 +2,10 @@ package com.security.jwt2.service;
 
 import com.security.jwt2.domain.dto.post.PostDto;
 import com.security.jwt2.domain.entity.Post;
+import com.security.jwt2.domain.entity.User;
 import com.security.jwt2.exception.AlreadyExistsException;
 import com.security.jwt2.repository.PostRepository;
+import com.security.jwt2.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
     public List<PostDto> getPostAll() {
@@ -28,7 +31,12 @@ public class PostService {
         if (postRepository.existsByTitle(postDto.getTitle())) {
             throw new AlreadyExistsException("이미 존재한는 게시글 입니다.");
         }
-        Post savedPost = postRepository.save(postDto.toEntity());
+        User user = userRepository.findByLoginId(postDto.getLoginId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자 id"));
+
+        Post post = postDto.toEntity();
+        post.setUser(user);
+        Post savedPost = postRepository.save(post);
         return savedPost.toDto();
     }
 

@@ -15,14 +15,16 @@ public class Post extends Period {
     private Long id;
     private String title;
     private String content;
+    @ManyToOne
+    private User user;
 
     @Builder
-    public Post(String content, Long id, String title) {
+    public Post(String content, Long id, String title, User user) {
         this.content = content;
         this.id = id;
         this.title = title;
+        this.user = user;
     }
-
 
     public PostDto toDto(){
         PostDto dto = new PostDto();
@@ -31,7 +33,7 @@ public class Post extends Period {
         dto.setContent(content);
         dto.setCreatedDate(getCreatedDate());
         dto.setModifiedDate(getModifiedDate());
-//        dto.setLoginId(user.getLoginId());
+        dto.setLoginId(user.getLoginId());
         return dto;
     }
 
