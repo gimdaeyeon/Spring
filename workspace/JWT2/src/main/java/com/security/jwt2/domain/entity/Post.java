@@ -34,6 +34,7 @@ public class Post extends Period {
         dto.setCreatedDate(getCreatedDate());
         dto.setModifiedDate(getModifiedDate());
         dto.setLoginId(user.getLoginId());
+        dto.setNickname(user.getNickname());
         return dto;
     }
 

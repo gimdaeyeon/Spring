@@ -15,13 +15,15 @@ public class PostDto {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
     private String loginId;
+    private String nickname;
 
-    public PostDto(String loginId, String content, LocalDateTime createdDate, Long id, LocalDateTime modifiedDate, String title) {
-        this.loginId = loginId;
+    public PostDto(String content, LocalDateTime createdDate, Long id, String loginId, LocalDateTime modifiedDate, String nickname, String title) {
         this.content = content;
         this.createdDate = createdDate;
         this.id = id;
+        this.loginId = loginId;
         this.modifiedDate = modifiedDate;
+        this.nickname = nickname;
         this.title = title;
     }
 
