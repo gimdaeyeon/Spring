@@ -1,6 +1,7 @@
 package hello.core.adbanced.trace.strategy;
 
 import hello.core.adbanced.trace.strategy.code.strategy.ContextV1;
+import hello.core.adbanced.trace.strategy.code.strategy.Strategy;
 import hello.core.adbanced.trace.strategy.code.strategy.StrategyLogic1;
 import hello.core.adbanced.trace.strategy.code.strategy.StrategyLogic2;
 import hello.core.adbanced.trace.template.code.AbstractTemplate;
@@ -52,4 +53,79 @@ public class ContextV1Test {
         contextV2.execute();
     }
 
+    @Test
+    void strategyV2(){
+        Strategy strategyLogic1 = new Strategy() {
+            @Override
+            public void call() {
+                log.info("비즈니스 로직1 실행");
+            }
+        };
+
+        ContextV1 contextV1 = new ContextV1(strategyLogic1);
+        contextV1.execute();
+
+        Strategy strategyLogic2 = new Strategy() {
+            @Override
+            public void call() {
+                log.info("비즈니스 로직2 실행");
+            }
+        };
+
+        ContextV1 contextV2 = new ContextV1(strategyLogic2);
+        contextV2.execute();
+    }
+
+    @Test
+    void strategyV3(){
+        ContextV1 contextV1 = new ContextV1(new Strategy() {
+            @Override
+            public void call() {
+                log.info("비즈니스 로직1 실행");
+            }
+        });
+        contextV1.execute();
+
+        ContextV1 contextV2 = new ContextV1(new Strategy() {
+            @Override
+            public void call() {
+                log.info("비즈니스 로직2 실행");
+            }
+        });
+        contextV2.execute();
+    }
+
+    @Test
+    void strategyV4(){
+        ContextV1 contextV1 = new ContextV1(() -> log.info("비즈니스 로직1 실행"));
+        contextV1.execute();
+
+        ContextV1 contextV2 = new ContextV1(() -> log.info("비즈니스 로직2 실행"));
+        contextV2.execute();
+    }
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
